@@ -27,14 +27,14 @@ class HomePage extends StatelessWidget {
                     GestureDetector(
                       onTap: () {},
                       child: Image.asset(
-                        'assets/images/home_icon_menu.png',
+                        'assets/images/main_icon_menu.png',
                         width: 24,
                         height: 24,
                       ),
                     ),
                     ClipOval(
                       child: Image.asset(
-                        'assets/images/home_avatar.png',
+                        'assets/images/avatar.png',
                         width: 40,
                         height: 40,
                         fit: BoxFit.cover,
