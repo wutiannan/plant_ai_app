@@ -1,272 +1,609 @@
-// lib/pages/virtual_garden_page.dart
 import 'package:flutter/material.dart';
+import 'package:plant_ai_app/pages/garden_page.dart'; // 导入花园页
+import 'package:plant_ai_app/pages/nursery_room_page.dart'; // 导入培育房页
 
 class VirtualGardenPage extends StatelessWidget {
-  VirtualGardenPage({Key? key}) : super(key: key);
-
-  final List<Map<String, dynamic>> _ownedPlants = [
-    {
-      'name': '栀子花',
-      'status': '健康成长中',
-      'waterLevel': 75,
-      'fertilizerLevel': 40,
-      'imageUrl': 'https://picsum.photos/300/300?random=31',
-    },
-    {
-      'name': '草莓',
-      'status': '即将结果',
-      'waterLevel': 90,
-      'fertilizerLevel': 60,
-      'imageUrl': 'https://picsum.photos/300/300?random=32',
-    },
-    {
-      'name': '仙人掌',
-      'status': '状态良好',
-      'waterLevel': 30,
-      'fertilizerLevel': 20,
-      'imageUrl': 'https://picsum.photos/300/300?random=33',
-    },
-  ];
+  const VirtualGardenPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('来布置你的个性化“植域”吧！')),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // 花园预览
-            Container(
-              height: 200,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage('https://picsum.photos/800/400?random=3'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: Stack(
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/main_bg.png'),
+            fit: BoxFit.cover,
+          ),
+          // gradient: LinearGradient(
+          //   begin: Alignment.topLeft,
+          //   end: Alignment.bottomRight,
+          //   colors: [Color(0xFFD9F8E7), Color(0xFFF9F7FE)],
+          // ),
+        ),
+        // 页面背景图
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // 顶部栏：菜单  + 头像
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Positioned(
-                    bottom: 16,
-                    left: 16,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text(
-                          '雪椰的花园',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(height: 4),
-                        Text(
-                          '今日活跃度: 85%',
-                          style: TextStyle(color: Colors.white, fontSize: 16),
-                        ),
-                      ],
+                  // 菜单图标
+                  Image.asset(
+                    'assets/images/main_icon_menu.png',
+                    width: 24,
+                    height: 24,
+                  ),
+                  // 头像
+                  ClipOval(
+                    child: Image.asset(
+                      'assets/images/avatar.png',
+                      width: 40,
+                      height: 40,
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ],
               ),
-            ),
-            // 功能按钮
-            const Padding(
-              padding: EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+              const SizedBox(height: 12),
+
+              // 标题区域
+              const Text(
+                '来布置你的个性化“植域”吧！',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              const Text(
+                'LET’S SET UP YOUR EXCLUSIVE ’PLANTING AREA’!',
+                style: TextStyle(fontSize: 12, color: Colors.grey),
+              ),
+
+              const SizedBox(height: 28),
+
+              // 花园横幅 + 进入花园按钮
+              Stack(
                 children: [
-                  _GardenActionButton(icon: Icons.add, label: '添加植物'),
-                  _GardenActionButton(icon: Icons.edit, label: '布置花园'),
-                  _GardenActionButton(icon: Icons.auto_awesome, label: '花园美化'),
-                  _GardenActionButton(icon: Icons.share, label: '分享花园'),
-                ],
-              ),
-            ),
-            // 我的植物
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                '我的植物',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-            ),
-            const SizedBox(height: 8),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: _ownedPlants.length,
-              itemBuilder: (context, index) {
-                final plant = _ownedPlants[index];
-                return _PlantItem(plant: plant);
-              },
-            ),
-            // 养护提醒
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              child: Text(
-                '养护提醒',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Card(
-                child: ListTile(
-                  leading: Icon(Icons.notifications, color: Colors.green),
-                  title: Text('今日需要浇水的植物'),
-                  subtitle: Text('栀子花、草莓'),
-                  trailing: Icon(Icons.arrow_forward_ios),
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _GardenActionButton extends StatelessWidget {
-  final IconData icon;
-  final String label;
-
-  const _GardenActionButton({Key? key, required this.icon, required this.label})
-    : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: 60,
-          height: 60,
-          decoration: BoxDecoration(
-            color: Colors.green.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(30),
-          ),
-          child: Icon(icon, size: 32, color: Colors.green),
-        ),
-        const SizedBox(height: 8),
-        Text(label),
-      ],
-    );
-  }
-}
-
-class _PlantItem extends StatelessWidget {
-  final Map<String, dynamic> plant;
-
-  const _PlantItem({Key? key, required this.plant}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Image.network(
-                  plant['imageUrl'],
-                  width: 80,
-                  height: 80,
-                  fit: BoxFit.cover,
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        plant['name'],
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                  // 横幅图片
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.asset(
+                      'assets/images/virtual_garden_banner.png',
+                      width: double.infinity,
+                      height: 140,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  // 进入花园按钮（右上角）
+                  Positioned(
+                    top: 12,
+                    right: 12,
+                    child: GestureDetector(
+                      onTap: () {
+                        // 点击进入花园
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const GardenPage(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: const Text(
+                          '进入花园',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        '状态: ${plant['status']}',
-                        style: const TextStyle(fontSize: 14),
+                    ),
+                  ),
+                  // 横幅标题（左下角）
+                  Positioned(
+                    bottom: 12,
+                    left: 12,
+                    child: const Text(
+                      '雪橇狗的花园',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
                       ),
-                      const SizedBox(height: 8),
-                      Row(
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 24),
+
+              // 功能按钮区：竖排的植物图鉴和植域商城
+              Row(
+                children: [
+                  // 右侧培育房按钮
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        // 点击进入花园
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const NurseryRoomPage(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        height: 184, // 与左侧两个按钮高度一致
+                        // decoration: BoxDecoration(
+                        //   // color: Colors.white,
+                        //   borderRadius: BorderRadius.circular(12),
+                        //   boxShadow: [
+                        //     BoxShadow(
+                        //       color: Colors.grey.withOpacity(0.1),
+                        //       blurRadius: 4,
+                        //       offset: const Offset(0, 2),
+                        //     ),
+                        //   ],
+                        // ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/images/virtual_nursery_room.png',
+                              width: 164,
+                              height: 164,
+                            ),
+                            // const SizedBox(height: 12),
+                            // const Text(
+                            //   '培育房',
+                            //   style: TextStyle(
+                            //     fontSize: 16,
+                            //     fontWeight: FontWeight.w600,
+                            //   ),
+                            // ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  // 左侧竖排按钮
+                  Column(
+                    children: [
+                      // 植物图鉴
+                      GestureDetector(
+                        onTap: () {
+                          // 植物图鉴点击逻辑
+                        },
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              'assets/images/virtual_plant_encyclopedia.png',
+                              width: 165,
+                              height: 84,
+                            ),
+                            // const SizedBox(height: 8),
+                            // const Text(
+                            //   '植物图鉴',
+                            //   style: TextStyle(
+                            //     fontSize: 14,
+                            //     fontWeight: FontWeight.w500,
+                            //   ),
+                            // ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      // 植域商城
+                      GestureDetector(
+                        onTap: () {
+                          // 植域商城点击逻辑
+                        },
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              'assets/images/virtual_garden_mall.png',
+                              width: 165,
+                              height: 84,
+                            ),
+                            // const SizedBox(height: 8),
+                            // const Text(
+                            //   '植域商城',
+                            //   style: TextStyle(
+                            //     fontSize: 14,
+                            //     fontWeight: FontWeight.w500,
+                            //   ),
+                            // ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(width: 32),
+                ],
+              ),
+
+              const SizedBox(height: 24),
+
+              // 植物卡片区：栀子花 + 草莓
+              Row(
+                children: [
+                  // 栀子花卡片（带渐变色）
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        gradient: const LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [Color(0xFFF0F9F4), Color(0xFFE8F8F3)],
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.1),
+                            blurRadius: 4,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                          // 植物图片
+                          Center(
+                            child: Image.asset(
+                              'assets/images/virtual_gardenia.png',
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          // 植物名称
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 12),
+                            child: Text(
+                              '栀子花',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          // 植物描述
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 12),
+                            child: Text(
+                              '为茜草科、栀子属灌木植物，花芳香，单朵生于枝顶，花期3~7月，果期5月~翌年2月。',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey,
+                                height: 1.4,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          // 培养难度（椭圆形）
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            child: Row(
                               children: [
                                 const Text(
-                                  '水分',
-                                  style: TextStyle(fontSize: 12),
+                                  '培养难度：',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey,
+                                  ),
                                 ),
-                                LinearProgressIndicator(
-                                  value: plant['waterLevel'] / 100,
-                                  backgroundColor: Colors.grey[200],
-                                  color: Colors.blue,
+                                const SizedBox(width: 4),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 2,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFE8F8F3),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: const Row(
+                                    children: [
+                                      Icon(
+                                        Icons.circle,
+                                        color: Colors.green,
+                                        size: 8,
+                                      ),
+                                      Icon(
+                                        Icons.circle,
+                                        color: Colors.green,
+                                        size: 8,
+                                      ),
+                                      Icon(
+                                        Icons.circle,
+                                        color: Colors.green,
+                                        size: 8,
+                                      ),
+                                      Icon(
+                                        Icons.circle,
+                                        color: Colors.grey,
+                                        size: 8,
+                                      ),
+                                      Icon(
+                                        Icons.circle,
+                                        color: Colors.grey,
+                                        size: 8,
+                                      ),
+                                      SizedBox(width: 4),
+                                      Text(
+                                        '中等',
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          color: Colors.green,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
                           ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                          const SizedBox(height: 8),
+                          // 价格与操作（域币数值和文字分开）
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 8,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  '肥料',
-                                  style: TextStyle(fontSize: 12),
+                                Row(
+                                  children: [
+                                    Text(
+                                      '150',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 2),
+                                    const Text(
+                                      '域币',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.green,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                LinearProgressIndicator(
-                                  value: plant['fertilizerLevel'] / 100,
-                                  backgroundColor: Colors.grey[200],
-                                  color: Colors.orange,
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        // 购物车逻辑
+                                      },
+                                      icon: const Icon(
+                                        Icons.shopping_cart,
+                                        size: 18,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        // 收藏逻辑
+                                      },
+                                      icon: const Icon(
+                                        Icons.favorite,
+                                        size: 18,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
                           ),
                         ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    // 浇水逻辑
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    foregroundColor: Colors.white,
+                  const SizedBox(width: 12),
+                  // 草莓卡片（带渐变色）
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        gradient: const LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [Color(0xFFF0F9F4), Color(0xFFE8F8F3)],
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.1),
+                            blurRadius: 4,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // 植物图片
+                          Center(
+                            child: Image.asset(
+                              'assets/images/virtual_strawberry.png',
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          // 植物名称
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 12),
+                            child: Text(
+                              '草莓',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          // 植物描述
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 12),
+                            child: Text(
+                              '蔷薇科草莓属多年生草本植物，小叶具短柄，倒卵形或菱形，花期4~5月，果期6~7月。',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey,
+                                height: 1.4,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          // 培养难度（椭圆形）
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            child: Row(
+                              children: [
+                                const Text(
+                                  '培养难度：',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                const SizedBox(width: 4),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 2,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFE8F8F3),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: const Row(
+                                    children: [
+                                      Icon(
+                                        Icons.circle,
+                                        color: Colors.green,
+                                        size: 8,
+                                      ),
+                                      Icon(
+                                        Icons.circle,
+                                        color: Colors.green,
+                                        size: 8,
+                                      ),
+                                      Icon(
+                                        Icons.circle,
+                                        color: Colors.green,
+                                        size: 8,
+                                      ),
+                                      Icon(
+                                        Icons.circle,
+                                        color: Colors.green,
+                                        size: 8,
+                                      ),
+                                      Icon(
+                                        Icons.circle,
+                                        color: Colors.grey,
+                                        size: 8,
+                                      ),
+                                      SizedBox(width: 4),
+                                      Text(
+                                        '较难',
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          color: Colors.green,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          // 价格与操作（域币数值和文字分开）
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 8,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      '250',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 2),
+                                    const Text(
+                                      '域币',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.green,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        // 购物车逻辑
+                                      },
+                                      icon: const Icon(
+                                        Icons.shopping_cart,
+                                        size: 18,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        // 收藏逻辑
+                                      },
+                                      icon: const Icon(
+                                        Icons.favorite,
+                                        size: 18,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                  child: const Text('浇水'),
-                ),
-                const SizedBox(width: 8),
-                ElevatedButton(
-                  onPressed: () {
-                    // 施肥逻辑
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
-                    foregroundColor: Colors.white,
-                  ),
-                  child: const Text('施肥'),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -111,7 +111,7 @@ class PlantCatalogPage extends StatelessWidget {
                             plant['name'],
                             style: const TextStyle(
                               fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                              // fontWeight: FontWeight.bold,
                             ),
                           ),
                           const SizedBox(height: 4),
