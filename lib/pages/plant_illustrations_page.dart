@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class GardenPage extends StatefulWidget {
-  const GardenPage({Key? key}) : super(key: key);
+class PlantIllustrationsPage extends StatefulWidget {
+  const PlantIllustrationsPage({Key? key}) : super(key: key);
 
   @override
-  State<GardenPage> createState() => _GardenPageState();
+  State<PlantIllustrationsPage> createState() => _PlantIllustrationsPageState();
 }
 
-class _GardenPageState extends State<GardenPage> {
+class _PlantIllustrationsPageState extends State<PlantIllustrationsPage> {
   // 分类选中状态
   String _selectedCategory = '全部';
   // Tab选中状态

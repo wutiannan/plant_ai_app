@@ -38,7 +38,7 @@ class _TabNavigatorState extends State<TabNavigator> {
   final List<Widget> _pages = [
     const HomePage(),
     const ARExplorePage(),
-    VirtualGardenPage(),
+    VirtualPlantIllustrationsPage(),
   ];
 
   @override

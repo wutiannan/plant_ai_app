@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:plant_ai_app/pages/plant_detail_page.dart';
 import 'package:plant_ai_app/pages/plant_model.dart';
-import 'package:plant_ai_app/pages/garden_page.dart' hide Plant; // 导入花园页
+import 'package:plant_ai_app/pages/plant_illustrations_page.dart'
+    hide Plant; // 导入花园页
 
 class NurseryRoomPage extends StatelessWidget {
   const NurseryRoomPage({Key? key}) : super(key: key);
@@ -60,7 +61,7 @@ class NurseryRoomPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(24),
                   ),
                   child: Padding(
-                    // padding: EdgeInsets.zero, // 移除容器内边距
+                    // padding: EdgeInsets.zero,
                     padding: const EdgeInsets.symmetric(
                       horizontal: 0,
                       vertical: 12,
@@ -116,7 +117,7 @@ class NurseryRoomPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const GardenPage(),
+                          builder: (context) => const PlantIllustrationsPage(),
                         ),
                       );
                     },
@@ -139,7 +140,7 @@ class NurseryRoomPage extends StatelessWidget {
   }
 }
 
-// 优化后的植物卡片组件（支持点击）
+// 植物卡片组件
 class _PlantCard extends StatelessWidget {
   final Plant plant;
   final VoidCallback onTap;

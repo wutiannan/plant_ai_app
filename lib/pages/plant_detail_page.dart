@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'plant_model.dart'; // 假设植物模型在这个文件中
+import 'plant_model.dart';
+import 'cultivation_interaction_page.dart'; // 引入培养互动页
 
 class PlantDetailPage extends StatelessWidget {
   final Plant plant;
@@ -15,6 +16,11 @@ class PlantDetailPage extends StatelessWidget {
             image: AssetImage('assets/images/main_bg.png'),
             fit: BoxFit.cover,
           ),
+          // gradient: LinearGradient(
+          //   begin: Alignment.topLeft,
+          //   end: Alignment.bottomRight,
+          //   colors: [Color(0xFFD9F8E7), Color(0xFFF9F7FE)],
+          // ),
         ),
         child: SafeArea(
           child: Padding(
@@ -36,7 +42,11 @@ class PlantDetailPage extends StatelessWidget {
                     ),
                     Text(
                       '培养说明',
-                      style: TextStyle(fontSize: 20, color: Colors.black),
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
                     IconButton(
                       icon: Image.asset(
@@ -53,7 +63,11 @@ class PlantDetailPage extends StatelessWidget {
                 // 植物名称和英文名称
                 Text(
                   plant.name,
-                  style: TextStyle(fontSize: 24, color: Colors.black),
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
                 ),
                 Text(
                   plant.enName,
@@ -61,29 +75,30 @@ class PlantDetailPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
 
-                // 培养说明文字区域
-                RichText(
-                  text: TextSpan(
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.black,
-                      height: 1.6,
+                // 绿色竖条和文字左右结构
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 4,
+                      height: 120,
+                      margin: const EdgeInsets.only(right: 12, top: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(2),
+                      ),
                     ),
-                    children: [
-                      WidgetSpan(
-                        child: Container(
-                          width: 4,
-                          height: 100, // 调整竖线高度以匹配文本
-                          margin: const EdgeInsets.only(right: 8),
-                          decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(2),
-                          ),
+                    Expanded(
+                      child: Text(
+                        plant.description,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          height: 1.6,
                         ),
                       ),
-                      TextSpan(text: plant.description),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 24),
 
@@ -98,32 +113,49 @@ class PlantDetailPage extends StatelessWidget {
                 ),
                 const Spacer(),
 
-                // 底部按钮
+                // 圆形按钮（白色边框+绿色阴影）
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Container(
-                    width: 120,
-                    height: 50,
                     margin: const EdgeInsets.only(bottom: 32),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(25),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.3),
-                          spreadRadius: 2,
-                          blurRadius: 5,
-                          offset: const Offset(0, 3),
+                    width: 120,
+                    height: 120, // 增大高度使按钮成为圆形
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // 按钮点击事件
+                        // 跳转到培养互动页并传递植物信息
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                CultivationInteractionPage(plant: plant),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        shape: const CircleBorder(), // 圆形按钮
+                        backgroundColor: Colors.white.withOpacity(0.5), // 按钮背景色
+                        padding: EdgeInsets.zero, // 去除内边距
+                        elevation: 10, // 按钮阴影深度
+                        shadowColor: Colors.green.withOpacity(0.5), // 绿色阴影
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Colors.white, // 白色边框
+                            width: 2, // 边框宽度
+                          ),
                         ),
-                      ],
-                    ),
-                    child: Center(
-                      child: Text(
-                        '开始培养',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                        child: Center(
+                          child: Text(
+                            '开始培养',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ),
                     ),

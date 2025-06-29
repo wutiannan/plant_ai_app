@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:plant_ai_app/pages/garden_page.dart'; // 导入花园页
+import 'package:plant_ai_app/pages/plant_illustrations_page.dart'; // 导入花园页
 import 'package:plant_ai_app/pages/nursery_room_page.dart'; // 导入培育房页
 
-class VirtualGardenPage extends StatelessWidget {
-  const VirtualGardenPage({Key? key}) : super(key: key);
+class VirtualPlantIllustrationsPage extends StatelessWidget {
+  const VirtualPlantIllustrationsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +60,7 @@ class VirtualGardenPage extends StatelessWidget {
                 ),
               ),
               const Text(
-                'LET’S SET UP YOUR EXCLUSIVE ’PLANTING AREA’!',
+                "LET'S SET UP YOUR EXCLUSIVE 'PLANTING AREA'!",
                 style: TextStyle(fontSize: 12, color: Colors.grey),
               ),
 
@@ -89,7 +89,8 @@ class VirtualGardenPage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const GardenPage(),
+                            builder: (context) =>
+                                const PlantIllustrationsPage(),
                           ),
                         );
                       },
@@ -186,7 +187,13 @@ class VirtualGardenPage extends StatelessWidget {
                       // 植物图鉴
                       GestureDetector(
                         onTap: () {
-                          // 植物图鉴点击逻辑
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const PlantIllustrationsPage(),
+                            ),
+                          );
                         },
                         child: Column(
                           children: [
