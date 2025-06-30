@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '植物探索',
+      title: '植域',
       theme: ThemeData(
         primarySwatch: Colors.green,
         visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -47,7 +47,7 @@ class _TabNavigatorState extends State<TabNavigator> {
       body: _pages[_selectedIndex],
       extendBody: true, // 让内容延伸到底部导航栏下方
       bottomNavigationBar: Container(
-        height: 74,
+        height: 120,
         decoration: const BoxDecoration(
           color: Colors.transparent, // 透明背景
         ),
@@ -117,15 +117,13 @@ class _TabNavigatorState extends State<TabNavigator> {
     bool isSpecial = false,
   }) {
     final isSelected = _selectedIndex == index;
-    final double iconSize = isSelected ? 64 : 48;
-    final double verticalOffset = isSelected ? 0 : 4; // 未选中时向上偏移4px，确保底部对齐
+    final double iconSize = isSelected ? 74 : 48;
+    // final double verticalOffset = isSelected ? 0 : 4;
 
     return GestureDetector(
       onTap: () {
         if (isSpecial) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(const SnackBar(content: Text('点击了中间按钮')));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('点击了中间按钮')));
         } else {
           setState(() => _selectedIndex = index);
         }
@@ -133,33 +131,22 @@ class _TabNavigatorState extends State<TabNavigator> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // 使用Padding控制垂直位置，确保底部对齐
-          Padding(
-            padding: EdgeInsets.only(bottom: verticalOffset),
-            child: Container(
-              width: isSpecial ? 60 : iconSize,
-              height: isSpecial ? 60 : iconSize,
-              decoration: isSpecial
-                  ? BoxDecoration(color: Colors.green, shape: BoxShape.circle)
-                  : null,
-              child: Center(
-                child: Image.asset(
-                  isSelected ? activeIconPath : iconPath,
-                  width: isSpecial ? 32 : iconSize,
-                  height: isSpecial ? 32 : iconSize,
-                  color: isSpecial ? Colors.white : null,
-                ),
+          // 移除Padding并直接使用Container
+          Container(
+            width: isSpecial ? 60 : iconSize,
+            height: isSpecial ? 60 : iconSize,
+            decoration: isSpecial
+                ? BoxDecoration(color: Colors.green, shape: BoxShape.circle)
+                : null,
+            child: Center(
+              child: Image.asset(
+                isSelected ? activeIconPath : iconPath,
+                width: isSpecial ? 32 : iconSize,
+                height: isSpecial ? 32 : iconSize,
+                color: isSpecial ? Colors.white : null,
               ),
             ),
           ),
-          // if (!isSpecial)
-          //   Text(
-          //     label,
-          //     style: TextStyle(
-          //       fontSize: 12,
-          //       color: isSelected ? Colors.green : Colors.grey,
-          //     ),
-          //   ),
         ],
       ),
     );

@@ -10,12 +10,16 @@ class ARExplorePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xFFE8F8F3), Color(0xFFFFFFFF)],
+              decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/main_bg.png'),
+            fit: BoxFit.cover,
           ),
+          // gradient: LinearGradient(
+          //   begin: Alignment.topLeft,
+          //   end: Alignment.bottomRight,
+          //   colors: [Color(0xFFD9F8E7), Color(0xFFF9F7FE)],
+          // ),
         ),
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
@@ -133,27 +137,27 @@ class ARExplorePage extends StatelessWidget {
                 children: [
                   Expanded(
                     child: _buildTaskCard(
-                      imagePath: 'assets/images/explore_btn_bg.png',
+                      imagePath: 'assets/images/explore_todo_bg.png',
                       title: '计划任务',
-                      iconPath: 'assets/images/explore_todo.png',
+                      // iconPath: 'assets/images/explore_todo.png',
                       // count: 8,
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: _buildTaskCard(
-                      imagePath: 'assets/images/explore_btn_bg.png',
+                      imagePath: 'assets/images/explore_nearby_bg.png',
                       title: '附近推荐任务',
-                      iconPath: 'assets/images/explore_nearby.png',
+                      // iconPath: 'assets/images/explore_nearby.png',
                       // count: 12,
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: _buildTaskCard(
-                      imagePath: 'assets/images/explore_btn_bg.png',
+                      imagePath: 'assets/images/explore_invited_bg.png',
                       title: '受邀任务',
-                      iconPath: 'assets/images/explore_invited.png',
+                      // iconPath: 'assets/images/explore_invited.png',
                       // count: 3,
                     ),
                   ),
@@ -201,7 +205,7 @@ class ARExplorePage extends StatelessWidget {
             bottom: 0,
             left: 0,
             right: 0,
-            height: 70, // 覆盖下半部分
+            height: 38, // 覆盖下半部分
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.vertical(
@@ -211,8 +215,8 @@ class ARExplorePage extends StatelessWidget {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Colors.blue.withOpacity(0.0), // 顶部透明
-                    Colors.blue.withOpacity(0.7), // 底部70%透明度
+                    const Color(0xFF46D7E7).withOpacity(0.85), 
+                 const Color(0xFF46D7E7).withOpacity(0.85), 
                   ],
                 ),
               ),
@@ -269,13 +273,13 @@ class ARExplorePage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     title,
                     style: const TextStyle(
                       fontSize: 14,
-                      fontWeight: FontWeight.w600,
+                      // fontWeight: FontWeight.w600,
                       color: Colors.white,
                     ),
                   ),
@@ -318,82 +322,93 @@ class ARExplorePage extends StatelessWidget {
   Widget _buildTaskCard({
     required String imagePath,
     required String title,
-    required String iconPath,
+    // required String iconPath,
     // required int count,
   }) {
-    return Container(
-      height: 167,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        // boxShadow: [
-        //   BoxShadow(
-        //     color: Colors.grey.withOpacity(0.1),
-        //     blurRadius: 4,
-        //     offset: const Offset(0, 2),
-        //   ),
-        // ],
-      ),
-      child: Stack(
-        children: [
-          // 底图
-          Positioned.fill(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.asset(imagePath, fit: BoxFit.cover),
-            ),
-          ),
-
-          // 内容
-          Positioned.fill(
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // 图标
-                  Container(
-                    width: 24,
-                    height: 24,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                    child: Center(
-                      child: Image.asset(iconPath, width: 16, height: 16),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  // 标题
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  // 任务数量
-                  // Container(
-                  //   padding: const EdgeInsets.symmetric(
-                  //     horizontal: 8,
-                  //     vertical: 2,
-                  //   ),
-                  //   decoration: BoxDecoration(
-                  //     color: Colors.white.withOpacity(0.2),
-                  //     borderRadius: BorderRadius.circular(12),
-                  //   ),
-                  //   child: Text(
-                  //     '$count个任务',
-                  //     style: const TextStyle(fontSize: 10, color: Colors.white),
-                  //   ),
-                  // ),
-                ],
+    return GestureDetector(
+      onTap: () {
+        if (title == '计划任务') {
+          print('点击了$title');
+        } else if (title == '附近推荐任务') {
+          print('点击了$title');
+        } else if (title == '受邀任务') {
+          print('点击了$title');
+        }
+      },
+      child: Container(
+        height: 167,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          // boxShadow: [
+          //   BoxShadow(
+          //     color: Colors.grey.withOpacity(0.1),
+          //     blurRadius: 4,
+          //     offset: const Offset(0, 2),
+          //   ),
+          // ],
+        ),
+        child: Stack(
+          children: [
+            // 底图
+            Positioned.fill(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.asset(imagePath, fit: BoxFit.cover),
               ),
             ),
-          ),
-        ],
+
+            // 内容
+            Positioned.fill(
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // 图标
+                    // Container(
+                    //   width: 24,
+                    //   height: 24,
+                    //   decoration: const BoxDecoration(
+                    //     shape: BoxShape.circle,
+                    //     color: Colors.white,
+                    //   ),
+                    //   child: Center(
+                    //     child: Image.asset(iconPath, width: 16, height: 16),
+                    //   ),
+                    // ),
+                    const SizedBox(height: 10),
+                    // 标题
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        // fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    // 任务数量
+                    // Container(
+                    //   padding: const EdgeInsets.symmetric(
+                    //     horizontal: 8,
+                    //     vertical: 2,
+                    //   ),
+                    //   decoration: BoxDecoration(
+                    //     color: Colors.white.withOpacity(0.2),
+                    //     borderRadius: BorderRadius.circular(12),
+                    //   ),
+                    //   child: Text(
+                    //     '$count个任务',
+                    //     style: const TextStyle(fontSize: 10, color: Colors.white),
+                    //   ),
+                    // ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
