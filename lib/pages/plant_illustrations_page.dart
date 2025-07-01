@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plant_ai_app/pages/plant_model.dart';
 
 class PlantIllustrationsPage extends StatefulWidget {
   const PlantIllustrationsPage({Key? key}) : super(key: key);
@@ -7,88 +8,120 @@ class PlantIllustrationsPage extends StatefulWidget {
   State<PlantIllustrationsPage> createState() => _PlantIllustrationsPageState();
 }
 
-class _PlantIllustrationsPageState extends State<PlantIllustrationsPage> {
-  // 分类选中状态
+class _PlantIllustrationsPageState extends State<PlantIllustrationsPage>
+    with TickerProviderStateMixin {
   String _selectedCategory = '全部';
-  // Tab选中状态
-  String _selectedTab = '全部';
-  // 植物数据（含收藏、心愿单状态）
-  final List<Plant> _plants = [
-    Plant(
-      name: '蝴蝶兰',
-      desc: '蝴蝶兰又名蝶兰，花期4—6月...',
-      image: 'assets/images/plant_butterfly_orchid.png',
-      category: '鲜花',
-      isCollected: true,
-      isWishlist: false,
-    ),
-    Plant(
-      name: '栀子花',
-      desc: '为茜草科、栀子属灌木植物...',
-      image: 'assets/images/plant_gardenia.png',
-      category: '灌木',
-      isCollected: true,
-      isWishlist: false,
-    ),
-    Plant(
-      name: '草莓',
-      desc: '为蔷薇科草莓属多年生草本植物...',
-      image: 'assets/images/plant_strawberry.png',
-      category: '蔬菜',
-      isCollected: true,
-      isWishlist: false,
-    ),
-    Plant(
-      name: '郁金香',
-      desc: '百合科郁金香属多年生球根花卉...',
-      image: 'assets/images/plant_tulip.png',
-      category: '鲜花',
-      isCollected: true,
-      isWishlist: false,
-    ),
-    Plant(
-      name: '牡丹',
-      desc: '是芍药科、芍药属植物...',
-      image: 'assets/images/plant_peony.png',
-      category: '鲜花',
-      isCollected: false,
-      isWishlist: false,
-    ),
-  ];
+  List<Plant> _displayedPlants = [...plants];
+  late TabController _tabController;
+  final TextEditingController _searchController = TextEditingController();
 
-  // 筛选植物列表
-  List<Plant> _filteredPlants() {
-    List<Plant> result = [];
-    // 按分类筛选
-    if (_selectedCategory == '全部') {
-      result = _plants;
-    } else {
-      result = _plants.where((p) => p.category == _selectedCategory).toList();
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+    _tabController.addListener(_handleTabChange);
+    _filterPlants();
+  }
+
+  @override
+  void dispose() {
+    _tabController.removeListener(_handleTabChange);
+    _tabController.dispose();
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _handleTabChange() {
+    _filterPlants();
+  }
+
+  void _filterPlants() {
+    List<Plant> filtered = [];
+
+    // 根据当前选中的标签页筛选
+    switch (_tabController.index) {
+      case 0: // 全部
+        filtered = plants
+            .where(
+              (p) =>
+                  (_selectedCategory == '全部' ||
+                  p.category == _selectedCategory),
+            )
+            .toList();
+        break;
+      case 1: // 已收集
+        filtered = plants
+            .where(
+              (p) =>
+                  p.isCollected &&
+                  (_selectedCategory == '全部' ||
+                      p.category == _selectedCategory),
+            )
+            .toList();
+        break;
+      case 2: // 心愿单
+        filtered = plants
+            .where(
+              (p) =>
+                  p.isWishlist &&
+                  (_selectedCategory == '全部' ||
+                      p.category == _selectedCategory),
+            )
+            .toList();
+        break;
     }
-    // 按Tab筛选
-    if (_selectedTab == '已收集') {
-      result = result.where((p) => p.isCollected).toList();
-    } else if (_selectedTab == '心愿单') {
-      result = result.where((p) => p.isWishlist).toList();
+
+    // 应用搜索过滤
+    final searchQuery = _searchController.text.toLowerCase();
+    if (searchQuery.isNotEmpty) {
+      filtered = filtered
+          .where(
+            (p) =>
+                p.name.toLowerCase().contains(searchQuery) ||
+                p.description.toLowerCase().contains(searchQuery),
+          )
+          .toList();
     }
-    return result;
+
+    setState(() {
+      _displayedPlants = filtered;
+    });
+  }
+
+  void _onSearchChanged(String query) {
+    _filterPlants();
+  }
+
+  void _toggleCollection(Plant plant) {
+    setState(() {
+      plant.isCollected = !plant.isCollected;
+      _filterPlants();
+    });
+  }
+
+  void _toggleWishlist(Plant plant) {
+    setState(() {
+      plant.isWishlist = !plant.isWishlist;
+      _filterPlants();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5FFFA),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: const Color(0xFFF5FFFA),
+        backgroundColor: Colors.white,
         leading: IconButton(
           icon: Image.asset(
             'assets/images/main_icon_back.png',
-            width: 24,
-            height: 24,
+            width: 22,
+            height: 22,
           ),
           onPressed: () => Navigator.pop(context),
         ),
+        centerTitle: true,
         title: const Text(
           '植物图鉴',
           style: TextStyle(fontSize: 20, color: Colors.black),
@@ -97,8 +130,8 @@ class _PlantIllustrationsPageState extends State<PlantIllustrationsPage> {
           IconButton(
             icon: Image.asset(
               'assets/images/main_icon_menu.png',
-              width: 24,
-              height: 24,
+              width: 22,
+              height: 22,
             ),
             onPressed: () {},
           ),
@@ -106,356 +139,164 @@ class _PlantIllustrationsPageState extends State<PlantIllustrationsPage> {
       ),
       body: Column(
         children: [
-          // 搜索栏 + 分类标签（顶部区域）
-          Column(
-            children: [
-              // 搜索栏
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 12,
-                ),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.1),
-                        blurRadius: 4,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            hintText: '搜索栏：搜索你想找的植物或分类',
-                            hintStyle: const TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey,
-                            ),
-                            border: InputBorder.none,
-                            contentPadding: const EdgeInsets.symmetric(
-                              vertical: 12,
-                              horizontal: 10,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // 搜索按钮在右侧
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
-                        ),
-                        decoration: const BoxDecoration(
-                          color: Color(0xFFAFFF9F),
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(12),
-                            bottomRight: Radius.circular(12),
-                          ),
-                        ),
-                        child: Image.asset(
-                          'assets/images/plant_search_icon.png',
-                          width: 20,
-                          height: 20,
-                        ),
-                      ),
-                    ],
-                  ),
+          // 搜索栏
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: TextField(
+              controller: _searchController,
+              onChanged: _onSearchChanged,
+              decoration: InputDecoration(
+                hintText: '搜索植物或分类',
+                prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                filled: true,
+                fillColor: const Color(0xFFF5F5F5),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide.none,
                 ),
               ),
-              // 分类标签
-              Container(
-                height: 40,
-                margin: const EdgeInsets.symmetric(horizontal: 16),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.1),
-                      blurRadius: 4,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  children: [
-                    _TabItem(
-                      title: '全部',
-                      isActive: _selectedTab == '全部',
-                      onTap: () => setState(() => _selectedTab = '全部'),
-                    ),
-                    _TabItem(
-                      title: '已收集',
-                      isActive: _selectedTab == '已收集',
-                      onTap: () => setState(() => _selectedTab = '已收集'),
-                    ),
-                    _TabItem(
-                      title: '心愿单',
-                      isActive: _selectedTab == '心愿单',
-                      onTap: () => setState(() => _selectedTab = '心愿单'),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
-          const SizedBox(height: 12),
-          // 主体内容区（左侧分类菜单 + 右侧列表）
-          Expanded(
-            child: Row(
-              children: [
-                // 左侧分类菜单（固定样式）
-                Container(
-                  width: 90,
-                  color: const Color(0xFFAFFF9F),
-                  child: ListView(
-                    padding: EdgeInsets.zero,
-                    children: [
-                      _CategoryItem(
-                        title: '全部',
-                        isSelected: _selectedCategory == '全部',
-                        onTap: () => setState(() => _selectedCategory = '全部'),
-                      ),
-                      _CategoryItem(
-                        title: '灌木',
-                        isSelected: _selectedCategory == '灌木',
-                        onTap: () => setState(() => _selectedCategory = '灌木'),
-                      ),
-                      _CategoryItem(
-                        title: '藤类',
-                        isSelected: _selectedCategory == '藤类',
-                        onTap: () => setState(() => _selectedCategory = '藤类'),
-                      ),
-                      _CategoryItem(
-                        title: '树木',
-                        isSelected: _selectedCategory == '树木',
-                        onTap: () => setState(() => _selectedCategory = '树木'),
-                      ),
-                      _CategoryItem(
-                        title: '蕨类',
-                        isSelected: _selectedCategory == '蕨类',
-                        onTap: () => setState(() => _selectedCategory = '蕨类'),
-                      ),
-                      _CategoryItem(
-                        title: '地衣',
-                        isSelected: _selectedCategory == '地衣',
-                        onTap: () => setState(() => _selectedCategory = '地衣'),
-                      ),
-                      _CategoryItem(
-                        title: '鲜花',
-                        isSelected: _selectedCategory == '鲜花',
-                        onTap: () => setState(() => _selectedCategory = '鲜花'),
-                      ),
-                      _CategoryItem(
-                        title: '水生',
-                        isSelected: _selectedCategory == '水生',
-                        onTap: () => setState(() => _selectedCategory = '水生'),
-                      ),
-                      _CategoryItem(
-                        title: '蔬菜',
-                        isSelected: _selectedCategory == '蔬菜',
-                        onTap: () => setState(() => _selectedCategory = '蔬菜'),
-                      ),
-                    ],
-                  ),
-                ),
-                // 右侧植物列表
-                Expanded(
-                  child: ListView(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    children: _filteredPlants()
-                        .map(
-                          (plant) => _PlantItem(
-                            plant: plant,
-                            onCollect: () => setState(() {
-                              plant.isCollected = !plant.isCollected;
-                            }),
-                            onWishlist: () => setState(() {
-                              plant.isWishlist = !plant.isWishlist;
-                            }),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                ),
+
+          // Tab栏 - 绿色下划线指示器
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: TabBar(
+              controller: _tabController,
+              labelColor: Colors.black,
+              unselectedLabelColor: const Color(0xFF999999),
+              labelStyle: const TextStyle(fontWeight: FontWeight.bold),
+              indicator: const UnderlineTabIndicator(
+                borderSide: BorderSide(width: 3.0, color: Colors.green),
+                insets: EdgeInsets.symmetric(horizontal: 16), // 左右间距
+              ),
+              tabs: const [
+                Tab(text: '全部'),
+                Tab(text: '已收集'),
+                Tab(text: '心愿单'),
               ],
+            ),
+          ),
+
+          // 主内容区域（包含侧边栏和内容区）添加底图
+          Expanded(
+            child: Container(
+              decoration: const BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
+                ),
+                image: DecorationImage(
+                  image: AssetImage('assets/images/sidebar_bg.png'),
+                  fit: BoxFit.cover,
+                  // opacity: 0.1, // 调整底图透明度
+                ),
+              ),
+              child: Row(
+                children: [
+                  // 分类侧边栏
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 40),
+                    width: 84,
+                    color: Colors.transparent, // 透明背景
+                    child: ListView.builder(
+                      itemCount: _getCategories().length,
+                      itemBuilder: (context, index) {
+                        final category = _getCategories()[index];
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedCategory = category;
+                              _filterPlants();
+                            });
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(
+                                  'assets/images/illustrations_active.png',
+                                ),
+                                fit: BoxFit.cover,
+                                opacity: _selectedCategory == category
+                                    ? 1
+                                    : 0, // opacity: 0.1, // 调整底图透明度
+                              ),
+                              // color: _selectedCategory == category
+                              //     ? Colors.green.withOpacity(0.3)
+                              //     : Colors.transparent,
+                            ),
+                            child: Text(
+                              category,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+
+                  // 植物列表内容区
+                  Expanded(
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(40),
+                          topRight: Radius.circular(40),
+                        ),
+                      ),
+
+                      child: _displayedPlants.isEmpty
+                          ? const Center(child: Text('没有找到匹配的植物'))
+                          : ListView.builder(
+                              padding: const EdgeInsets.all(16),
+                              itemCount: _displayedPlants.length,
+                              itemBuilder: (context, index) {
+                                final plant = _displayedPlants[index];
+                                return _buildPlantCard(plant);
+                              },
+                            ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
       ),
     );
   }
-}
 
-// 植物数据模型
-class Plant {
-  String name;
-  String desc;
-  String image;
-  String category;
-  bool isCollected;
-  bool isWishlist;
-
-  Plant({
-    required this.name,
-    required this.desc,
-    required this.image,
-    required this.category,
-    required this.isCollected,
-    required this.isWishlist,
-  });
-}
-
-// 左侧分类项组件（含交互）
-class _CategoryItem extends StatelessWidget {
-  final String title;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const _CategoryItem({
-    required this.title,
-    required this.isSelected,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        height: 60,
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFFF5FFFA) : null,
-          borderRadius: isSelected
-              ? const BorderRadius.horizontal(right: Radius.circular(12))
-              : null,
-        ),
-        child: Center(
-          child: Text(
-            title,
-            style: TextStyle(
-              fontSize: 14,
-              color: isSelected ? Colors.black : Colors.grey,
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-            ),
-          ),
-        ),
-      ),
-    );
+  List<String> _getCategories() {
+    final categories = <String>{'全部'};
+    categories.addAll(plants.map((p) => p.category));
+    return categories.toList();
   }
-}
 
-// 分类标签组件（含交互）
-class _TabItem extends StatelessWidget {
-  final String title;
-  final bool isActive;
-  final VoidCallback onTap;
-
-  const _TabItem({
-    required this.title,
-    required this.isActive,
-    required this.onTap,
-  });
-
-  //     @override
-  //   Widget build(BuildContext context) {
-  //     return Container(
-  //       margin: const EdgeInsets.right(16),
-  //       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-  //       decoration: BoxDecoration(
-  //         color: isActive ? const Color(0xFF77DD77) : Colors.white,
-  //         borderRadius: BorderRadius.circular(12),
-  //         border: Border.all(
-  //           color: const Color(0xFF77DD77),
-  //         ),
-  //       ),
-  //       child: Text(
-  //         title,
-  //         style: TextStyle(
-  //           color: isActive ? Colors.white : const Color(0xFF77DD77),
-  //           fontSize: 14,
-  //         ),
-  //       ),
-  //     );
-  //   }
-
-  // // 分类标签组件
-  // class _TabItem extends StatelessWidget {
-  //   final String title;
-  //   final bool isActive;
-
-  //   const _TabItem({required this.title, this.isActive = false});
-
-  // }
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Expanded(
-        child: Container(
-          height: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            border: isActive
-                ? const Border(
-                    bottom: BorderSide(color: Color(0xFFAFFF9F), width: 2),
-                  )
-                : null,
-          ),
-          child: Text(
-            title,
-            style: TextStyle(
-              fontSize: 14,
-              color: isActive ? Colors.black : Colors.grey,
-              fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-// 植物列表项组件（含交互）
-class _PlantItem extends StatelessWidget {
-  final Plant plant;
-  final VoidCallback onCollect;
-  final VoidCallback onWishlist;
-
-  const _PlantItem({
-    required this.plant,
-    required this.onCollect,
-    required this.onWishlist,
-  });
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildPlantCard(Plant plant) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        borderRadius: BorderRadius.circular(20),
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: Colors.grey.withOpacity(0.2),
+        //     blurRadius: 5,
+        //     offset: const Offset(0, 3),
+        //   ),
+        // ],
+        image: DecorationImage(
+          image: AssetImage('assets/images/illustrations_card_bg.png'),
+          fit: BoxFit.cover,
+        ),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 文字内容
+          // 植物信息
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -469,159 +310,57 @@ class _PlantItem extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  plant.desc,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
-                    // height: 1.2,
-                  ),
-                  // maxLines: 3,
-                  // overflow: TextOverflow.ellipsis,
+                  plant.description,
+                  style: const TextStyle(fontSize: 12, color: Colors.black),
                 ),
-                // 收藏按钮（黑色勾勾）
+                const SizedBox(height: 4),
+
+                // 状态图标
                 Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    GestureDetector(
-                      onTap: onCollect,
-                      child: Container(
-                        // width: 12,
-                        margin: const EdgeInsets.only(right: 8),
-                        child: Icon(
-                          plant.isCollected
-                              ? Icons.check_circle
-                              : Icons.circle_outlined,
-                          color: plant.isCollected ? Colors.black : Colors.grey,
-                          size: 16,
-                        ),
+                    IconButton(
+                      icon: Icon(
+                        plant.isCollected
+                            ? Icons.check_circle
+                            : Icons.check_circle_outline,
+                        color: Colors.black,
                       ),
+                      onPressed: () => _toggleCollection(plant),
+                      iconSize: 20,
+                      padding: EdgeInsets.zero,
+                      splashRadius: 20,
                     ),
-                    // 心形按钮（心愿单）
-                    GestureDetector(
-                      onTap: onWishlist,
-                      child: Icon(
-                        plant.isWishlist
-                            ? Icons.favorite
-                            : Icons.favorite_border,
-                        color: plant.isWishlist ? Colors.pink : Colors.grey,
-                        size: 16,
+                    // const SizedBox(width: 5),
+                    IconButton(
+                      icon: Icon(
+                        Icons.favorite,
+                        color: plant.isWishlist
+                            ? Colors.red
+                            : const Color(0xFFEFEFEF),
                       ),
+                      onPressed: () => _toggleWishlist(plant),
+                      iconSize: 20,
+                      padding: EdgeInsets.zero,
+                      splashRadius: 20,
                     ),
                   ],
                 ),
               ],
             ),
           ),
+          const SizedBox(width: 12),
           // 植物图片
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Image.asset(
               plant.image,
-              width: 80,
-              height: 80,
+              width: 100,
+              height: 120,
               fit: BoxFit.cover,
             ),
           ),
-          const SizedBox(width: 12),
         ],
       ),
     );
   }
 }
-
-// // 植物列表项组件
-// class _PlantItem extends StatelessWidget {
-//   final String title;
-//   final String desc;
-//   final String imagePath;
-//   final bool isCollected;
-
-//   const _PlantItem({
-//     required this.title,
-//     required this.desc,
-//     required this.imagePath,
-//     required this.isCollected,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       margin: const EdgeInsets.only(bottom: 16),
-//       padding: const EdgeInsets.all(12),
-//       decoration: BoxDecoration(
-//         color: Colors.white,
-//         borderRadius: BorderRadius.circular(12),
-//         boxShadow: [
-//           BoxShadow(
-//             color: Colors.grey.withOpacity(0.1),
-//             blurRadius: 4,
-//             offset: const Offset(0, 2),
-//           ),
-//         ],
-//       ),
-//       child: Row(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           // 植物图片
-//           ClipRRect(
-//             borderRadius: BorderRadius.circular(8),
-//             child: Image.asset(
-//               imagePath,
-//               width: 80,
-//               height: 80,
-//               fit: BoxFit.cover,
-//             ),
-//           ),
-//           const SizedBox(width: 12),
-//           // 文字内容 + 操作按钮
-//           Expanded(
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 // 标题
-//                 Text(
-//                   title,
-//                   style: const TextStyle(
-//                     fontSize: 16,
-//                     fontWeight: FontWeight.bold,
-//                   ),
-//                 ),
-//                 const SizedBox(height: 4),
-//                 // 描述
-//                 Text(
-//                   desc,
-//                   style: const TextStyle(
-//                     fontSize: 12,
-//                     color: Colors.grey,
-//                     height: 1.4,
-//                   ),
-//                   maxLines: 3,
-//                   overflow: TextOverflow.ellipsis,
-//                 ),
-//                 const SizedBox(height: 8),
-//                 // 收藏按钮
-//                 Row(
-//                   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: [
-//                     Icon(
-//                       isCollected
-//                           ? Icons.check_circle_outline
-//                           : Icons.circle_outlined,
-//                       color: isCollected ? Colors.green : Colors.grey,
-//                       size: 18,
-//                     ),
-//                     Icon(
-//                       Icons.favorite_border,
-//                       color: isCollected ? Colors.pink : Colors.grey,
-//                       size: 18,
-//                     ),
-//                   ],
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }

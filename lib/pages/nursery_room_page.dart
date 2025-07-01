@@ -117,7 +117,7 @@ class NurseryRoomPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const PlantIllustrationsPage(),
+                          builder: (context) => PlantIllustrationsPage(),
                         ),
                       );
                     },
