@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plant_ai_app/pages/ar_task_select_page.dart';
-import 'package:plant_ai_app/pages/nearby_explore_page.dart';
-import 'package:flutter/material.dart';
+import 'package:plant_ai_app/pages/outdoor_explore_page.dart';
 
 class ARExplorePage extends StatelessWidget {
   const ARExplorePage({Key? key}) : super(key: key);
@@ -10,7 +9,7 @@ class ARExplorePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-              decoration: const BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/main_bg.png'),
             fit: BoxFit.cover,
@@ -215,8 +214,8 @@ class ARExplorePage extends StatelessWidget {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    const Color(0xFF46D7E7).withOpacity(0.85), 
-                 const Color(0xFF46D7E7).withOpacity(0.85), 
+                    const Color(0xFF46D7E7).withOpacity(0.85),
+                    const Color(0xFF46D7E7).withOpacity(0.85),
                   ],
                 ),
               ),
