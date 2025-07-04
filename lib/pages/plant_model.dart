@@ -8,6 +8,9 @@ class Plant {
   final String category;
   bool isCollected;
   bool isWishlist;
+  bool isInCart; // 新增购物车状态属性
+  final double price;
+  final String cultivationDifficulty; // 新增培养难度属性
 
   Plant({
     required this.name,
@@ -17,10 +20,14 @@ class Plant {
     required this.description,
     required this.category,
     required this.isCollected,
-    required this.isWishlist,
+    this.isWishlist = false,
+    required this.price,
+    this.isInCart = false, // 默认值为false
+    required this.cultivationDifficulty, // 新增培养难度参数
   });
 }
 
+// 同时需要更新所有 Plant 实例的初始化代码，添加 isInCart 参数
 // 植物数据列表
 List<Plant> plants = [
   Plant(
@@ -33,6 +40,8 @@ List<Plant> plants = [
     category: '',
     isCollected: true,
     isWishlist: false,
+    price: 100,
+    cultivationDifficulty: '中等', // 示例培养难度
   ),
   Plant(
     name: '菊花',
@@ -44,6 +53,8 @@ List<Plant> plants = [
     category: '鲜花',
     isCollected: true,
     isWishlist: false,
+    price: 100,
+    cultivationDifficulty: '容易', // 示例培养难度
   ),
   Plant(
     name: '捕蝇草',
@@ -55,6 +66,8 @@ List<Plant> plants = [
     category: '鲜花',
     isCollected: true,
     isWishlist: false,
+    price: 100,
+    cultivationDifficulty: '困难', // 示例培养难度
   ),
   Plant(
     name: '杜鹃',
@@ -66,6 +79,8 @@ List<Plant> plants = [
     category: '鲜花',
     isCollected: true,
     isWishlist: false,
+    price: 100,
+    cultivationDifficulty: '中等', // 示例培养难度
   ),
   Plant(
     name: '风铃草',
@@ -76,6 +91,8 @@ List<Plant> plants = [
     category: '鲜花',
     isCollected: true,
     isWishlist: false,
+    price: 100,
+    cultivationDifficulty: '容易', // 示例培养难度
   ),
 
   Plant(
@@ -87,6 +104,8 @@ List<Plant> plants = [
     category: '鲜花',
     isCollected: true,
     isWishlist: false,
+    price: 100,
+    cultivationDifficulty: '中等', // 示例培养难度
   ),
   Plant(
     name: '栀子花',
@@ -97,6 +116,8 @@ List<Plant> plants = [
     category: '鲜花',
     isCollected: true,
     isWishlist: false,
+    price: 100,
+    cultivationDifficulty: '容易', // 示例培养难度
   ),
   Plant(
     name: '郁金香',
@@ -107,6 +128,8 @@ List<Plant> plants = [
     category: '鲜花',
     isCollected: true,
     isWishlist: false,
+    price: 100,
+    cultivationDifficulty: '中等', // 示例培养难度
   ),
   Plant(
     name: '牡丹',
@@ -117,6 +140,8 @@ List<Plant> plants = [
     category: '鲜花',
     isCollected: true,
     isWishlist: false,
+    price: 100,
+    cultivationDifficulty: '困难', // 示例培养难度
   ),
   Plant(
     name: '仙人掌',
@@ -127,6 +152,8 @@ List<Plant> plants = [
     category: '',
     isCollected: true,
     isWishlist: false,
+    price: 100,
+    cultivationDifficulty: '容易', // 示例培养难度
   ),
   Plant(
     name: '鸢尾',
@@ -137,6 +164,8 @@ List<Plant> plants = [
     category: '',
     isCollected: true,
     isWishlist: false,
+    price: 100,
+    cultivationDifficulty: '中等', // 示例培养难度
   ),
   Plant(
     name: '含羞草',
@@ -147,5 +176,7 @@ List<Plant> plants = [
     category: '鲜花',
     isCollected: true,
     isWishlist: false,
+    price: 100,
+    cultivationDifficulty: '容易', // 示例培养难度
   ),
 ];

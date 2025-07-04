@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:plant_ai_app/pages/plant_illustrations_page.dart'; // 导入花园页
 import 'package:plant_ai_app/pages/nursery_room_page.dart'; // 导入培育房页
+import 'package:plant_ai_app/pages/shop_page.dart';
+import 'package:plant_ai_app/pages/plant_model.dart';
 
 class VirtualPlantIllustrationsPage extends StatelessWidget {
   const VirtualPlantIllustrationsPage({Key? key}) : super(key: key);
@@ -139,7 +141,6 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        // 点击进入花园
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -217,7 +218,14 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
                       // 植域商城
                       GestureDetector(
                         onTap: () {
-                          // 植域商城点击逻辑
+                          // 日志：点击进入植域商城
+                          print('Navigating to ShopPage');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ShopPage(),
+                            ),
+                          );
                         },
                         child: Column(
                           children: [
@@ -248,15 +256,14 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
               // 植物卡片区：栀子花 + 草莓
               Row(
                 children: [
-                  // 栀子花卡片（带渐变色）
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
                         gradient: const LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [Color(0xFFF0F9F4), Color(0xFFE8F8F3)],
+                          begin: Alignment.bottomLeft,
+                          end: Alignment.topRight,
+                          colors: [Color(0xFFFFF7BB), Color(0xFFC8FFFE)],
                         ),
                         boxShadow: [
                           BoxShadow(
@@ -322,8 +329,15 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
                                     vertical: 2,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: const Color(0xFFE8F8F3),
                                     borderRadius: BorderRadius.circular(12),
+                                    gradient: const LinearGradient(
+                                      begin: Alignment.bottomLeft,
+                                      end: Alignment.topRight,
+                                      colors: [
+                                        Color(0xFFFFF7BB),
+                                        Color(0xFFC8FFFE),
+                                      ],
+                                    ),
                                   ),
                                   child: const Row(
                                     children: [
@@ -396,30 +410,30 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                Row(
-                                  children: [
-                                    IconButton(
-                                      onPressed: () {
-                                        // 购物车逻辑
-                                      },
-                                      icon: const Icon(
-                                        Icons.shopping_cart,
-                                        size: 18,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        // 收藏逻辑
-                                      },
-                                      icon: const Icon(
-                                        Icons.favorite,
-                                        size: 18,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                // Row(
+                                //   children: [
+                                //     IconButton(
+                                //       onPressed: () {
+                                //         // 购物车逻辑
+                                //       },
+                                //       icon: const Icon(
+                                //         Icons.shopping_cart,
+                                //         size: 18,
+                                //         color: Colors.grey,
+                                //       ),
+                                //     ),
+                                //     IconButton(
+                                //       onPressed: () {
+                                //         // 收藏逻辑
+                                //       },
+                                //       icon: const Icon(
+                                //         Icons.favorite,
+                                //         size: 18,
+                                //         color: Colors.grey,
+                                //       ),
+                                //     ),
+                                //   ],
+                                // ),
                               ],
                             ),
                           ),
@@ -428,23 +442,15 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 12),
-                  // 草莓卡片（带渐变色）
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
                         gradient: const LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [Color(0xFFF0F9F4), Color(0xFFE8F8F3)],
+                          begin: Alignment.bottomLeft,
+                          end: Alignment.topRight,
+                          colors: [Color(0xFFFFF7BB), Color(0xFFC8FFFE)],
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.1),
-                            blurRadius: 4,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -576,30 +582,30 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                Row(
-                                  children: [
-                                    IconButton(
-                                      onPressed: () {
-                                        // 购物车逻辑
-                                      },
-                                      icon: const Icon(
-                                        Icons.shopping_cart,
-                                        size: 18,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        // 收藏逻辑
-                                      },
-                                      icon: const Icon(
-                                        Icons.favorite,
-                                        size: 18,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                // Row(
+                                //   children: [
+                                //     IconButton(
+                                //       onPressed: () {
+                                //         // 购物车逻辑
+                                //       },
+                                //       icon: const Icon(
+                                //         Icons.shopping_cart,
+                                //         size: 18,
+                                //         color: Colors.grey,
+                                //       ),
+                                //     ),
+                                //     IconButton(
+                                //       onPressed: () {
+                                //         // 收藏逻辑
+                                //       },
+                                //       icon: const Icon(
+                                //         Icons.favorite,
+                                //         size: 18,
+                                //         color: Colors.grey,
+                                //       ),
+                                //     ),
+                                //   ],
+                                // ),
                               ],
                             ),
                           ),
@@ -609,6 +615,7 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
                   ),
                 ],
               ),
+              const SizedBox(height: 28),
             ],
           ),
         ),

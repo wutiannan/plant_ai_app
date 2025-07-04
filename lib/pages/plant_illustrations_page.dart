@@ -168,7 +168,7 @@ class _PlantIllustrationsPageState extends State<PlantIllustrationsPage>
               labelStyle: const TextStyle(fontWeight: FontWeight.bold),
               indicator: const UnderlineTabIndicator(
                 borderSide: BorderSide(width: 3.0, color: Colors.green),
-                insets: EdgeInsets.symmetric(horizontal: 16), // 左右间距
+                // insets: EdgeInsets.symmetric(horizontal: 16), // 左右间距
               ),
               tabs: const [
                 Tab(text: '全部'),
