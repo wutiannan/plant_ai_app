@@ -8,18 +8,19 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Color(0xFFD9F8E7), Color(0xFFF9FBFE)],
+          image: DecorationImage(
+            image: AssetImage('assets/images/main_bg.png'),
+            fit: BoxFit.cover,
           ),
         ),
+
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: MediaQuery.of(context).padding.top-20),
                 // 顶部栏
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -97,7 +98,7 @@ class HomePage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(width: 16),
+                    const SizedBox(width: 66),
                     Image.asset(
                       'assets/images/home_plant_charactor.png',
                       width: 120,
