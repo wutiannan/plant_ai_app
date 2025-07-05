@@ -212,6 +212,7 @@ class _PlantIllustrationsPageState extends State<PlantIllustrationsPage>
                           },
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 12),
+                            margin: EdgeInsets.only(top: 12),
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 image: AssetImage(
@@ -220,11 +221,8 @@ class _PlantIllustrationsPageState extends State<PlantIllustrationsPage>
                                 fit: BoxFit.cover,
                                 opacity: _selectedCategory == category
                                     ? 1
-                                    : 0, // opacity: 0.1, // 调整底图透明度
+                                    : 0, 
                               ),
-                              // color: _selectedCategory == category
-                              //     ? Colors.green.withOpacity(0.3)
-                              //     : Colors.transparent,
                             ),
                             child: Text(
                               category,
