@@ -29,7 +29,7 @@ class _CultivationInteractionPageState
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/main_bg.png'),
+            image: AssetImage('assets/images/base_bg.png'),
             fit: BoxFit.cover,
           ),
         ),

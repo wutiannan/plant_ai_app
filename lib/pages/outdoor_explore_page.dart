@@ -55,7 +55,7 @@ class _OutdoorExplorePageState extends State<OutdoorExplorePage> {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/main_map_bg.png'),
+            image: AssetImage('assets/images/base_bg.png'),
             fit: BoxFit.cover,
           ),
         ),

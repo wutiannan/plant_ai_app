@@ -69,7 +69,7 @@ class ARExplorePage extends StatelessWidget {
               // 标题区域
               const Text(
                 '快来选择你的探索任务吧！',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                style: TextStyle(fontSize: 20),
               ),
               const SizedBox(height: 8),
               const Text(
@@ -82,7 +82,7 @@ class ARExplorePage extends StatelessWidget {
               // 虚拟主题探索乐园
               const Text(
                 '虚拟主题探索乐园',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                style: TextStyle(fontSize: 16),
               ),
               const SizedBox(height: 12),
 
@@ -119,7 +119,7 @@ class ARExplorePage extends StatelessWidget {
 
               const Text(
                 '户外实地探索任务',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                style: TextStyle(fontSize: 16),
               ),
               const SizedBox(height: 12),
 
