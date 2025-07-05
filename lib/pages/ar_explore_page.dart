@@ -14,11 +14,6 @@ class ARExplorePage extends StatelessWidget {
             image: AssetImage('assets/images/main_bg.png'),
             fit: BoxFit.cover,
           ),
-          // gradient: LinearGradient(
-          //   begin: Alignment.topLeft,
-          //   end: Alignment.bottomRight,
-          //   colors: [Color(0xFFD9F8E7), Color(0xFFF9F7FE)],
-          // ),
         ),
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
@@ -100,7 +95,6 @@ class ARExplorePage extends StatelessWidget {
                         child: _buildVirtualCard(
                           imagePath: 'assets/images/explore_jurassic.png',
                           title: '侏罗纪植物大冒险',
-                          // progress: 0.6,
                         ),
                       ),
                       const SizedBox(width: 12),
@@ -108,7 +102,6 @@ class ARExplorePage extends StatelessWidget {
                         child: _buildVirtualCard(
                           imagePath: 'assets/images/explore_travel.png',
                           title: '穿越时空的植物朋友',
-                          // progress: 0.3,
                         ),
                       ),
                     ],
@@ -117,7 +110,6 @@ class ARExplorePage extends StatelessWidget {
                   _buildVirtualCard(
                     imagePath: 'assets/images/explore_lab.png',
                     title: '小小植物科学家实验室',
-                    // progress: 0.8,
                     isFullWidth: true,
                   ),
                 ],
@@ -136,28 +128,25 @@ class ARExplorePage extends StatelessWidget {
                 children: [
                   Expanded(
                     child: _buildTaskCard(
+                      context: context,
                       imagePath: 'assets/images/explore_todo_bg.png',
                       title: '计划任务',
-                      // iconPath: 'assets/images/explore_todo.png',
-                      // count: 8,
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: _buildTaskCard(
+                      context: context,
                       imagePath: 'assets/images/explore_nearby_bg.png',
                       title: '附近推荐任务',
-                      // iconPath: 'assets/images/explore_nearby.png',
-                      // count: 12,
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: _buildTaskCard(
+                      context: context,
                       imagePath: 'assets/images/explore_invited_bg.png',
                       title: '受邀任务',
-                      // iconPath: 'assets/images/explore_invited.png',
-                      // count: 3,
                     ),
                   ),
                 ],
@@ -173,7 +162,6 @@ class ARExplorePage extends StatelessWidget {
   Widget _buildVirtualCard({
     required String imagePath,
     required String title,
-    // required double progress,
     bool isFullWidth = false,
   }) {
     return Container(
@@ -204,7 +192,7 @@ class ARExplorePage extends StatelessWidget {
             bottom: 0,
             left: 0,
             right: 0,
-            height: 38, // 覆盖下半部分
+            height: 38,
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.vertical(
@@ -222,48 +210,6 @@ class ARExplorePage extends StatelessWidget {
             ),
           ),
 
-          // // 右上角进度条
-          // Positioned(
-          //   top: 8,
-          //   right: 8,
-          //   child: Container(
-          //     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          //     decoration: BoxDecoration(
-          //       color: Colors.white.withOpacity(0.8),
-          //       borderRadius: BorderRadius.circular(12),
-          //     ),
-          //     child: Row(
-          //       children: [
-          //         Container(
-          //           width: 40,
-          //           height: 4,
-          //           decoration: BoxDecoration(
-          //             color: Colors.grey[300],
-          //             borderRadius: BorderRadius.circular(2),
-          //           ),
-          //           child: FractionallySizedBox(
-          //             widthFactor: progress,
-          //             child: Container(
-          //               decoration: BoxDecoration(
-          //                 color: Colors.green,
-          //                 borderRadius: BorderRadius.circular(2),
-          //               ),
-          //             ),
-          //           ),
-          //         ),
-          //         const SizedBox(width: 4),
-          //         Text(
-          //           '${(progress * 100).toInt()}%',
-          //           style: const TextStyle(
-          //             fontSize: 10,
-          //             fontWeight: FontWeight.w500,
-          //           ),
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
-
           // 底部文字内容（覆盖在半透明蓝色上）
           Positioned(
             bottom: 0,
@@ -276,38 +222,8 @@ class ARExplorePage extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      // fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
+                    style: const TextStyle(fontSize: 14, color: Colors.white),
                   ),
-                  const SizedBox(height: 4),
-                  // Row(
-                  //   children: [
-                  //     Image.asset(
-                  //       'assets/images/home_icon_star.png',
-                  //       width: 12,
-                  //       height: 12,
-                  //     ),
-                  //     const SizedBox(width: 4),
-                  //     const Text(
-                  //       '4.8',
-                  //       style: TextStyle(fontSize: 10, color: Colors.white),
-                  //     ),
-                  //     const SizedBox(width: 8),
-                  //     Image.asset(
-                  //       'assets/images/home_icon_star.png',
-                  //       width: 12,
-                  //       height: 12,
-                  //     ),
-                  //     const SizedBox(width: 4),
-                  //     const Text(
-                  //       '12.5k',
-                  //       style: TextStyle(fontSize: 10, color: Colors.white),
-                  //     ),
-                  //   ],
-                  // ),
                 ],
               ),
             ),
@@ -319,33 +235,26 @@ class ARExplorePage extends StatelessWidget {
 
   // 构建户外实地探索任务卡片（带底图）
   Widget _buildTaskCard({
+    required BuildContext context,
     required String imagePath,
     required String title,
-    // required String iconPath,
-    // required int count,
   }) {
     return GestureDetector(
       onTap: () {
-        if (title == '计划任务') {
+        if (title == '附近推荐任务') {
+          // 导航到户外探索页面
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const OutdoorExplorePage()),
+          );
+        } else {
           print('点击了$title');
-        } else if (title == '附近推荐任务') {
-          print('点击了$title');
-        } else if (title == '受邀任务') {
-          print('点击了$title');
+          // 其他卡片的逻辑可以在这里添加
         }
       },
       child: Container(
         height: 167,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          // boxShadow: [
-          //   BoxShadow(
-          //     color: Colors.grey.withOpacity(0.1),
-          //     blurRadius: 4,
-          //     offset: const Offset(0, 2),
-          //   ),
-          // ],
-        ),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
         child: Stack(
           children: [
             // 底图
@@ -364,44 +273,12 @@ class ARExplorePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // 图标
-                    // Container(
-                    //   width: 24,
-                    //   height: 24,
-                    //   decoration: const BoxDecoration(
-                    //     shape: BoxShape.circle,
-                    //     color: Colors.white,
-                    //   ),
-                    //   child: Center(
-                    //     child: Image.asset(iconPath, width: 16, height: 16),
-                    //   ),
-                    // ),
                     const SizedBox(height: 10),
                     // 标题
                     Text(
                       title,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        // fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
+                      style: const TextStyle(fontSize: 14, color: Colors.white),
                     ),
-                    const SizedBox(height: 4),
-                    // 任务数量
-                    // Container(
-                    //   padding: const EdgeInsets.symmetric(
-                    //     horizontal: 8,
-                    //     vertical: 2,
-                    //   ),
-                    //   decoration: BoxDecoration(
-                    //     color: Colors.white.withOpacity(0.2),
-                    //     borderRadius: BorderRadius.circular(12),
-                    //   ),
-                    //   child: Text(
-                    //     '$count个任务',
-                    //     style: const TextStyle(fontSize: 10, color: Colors.white),
-                    //   ),
-                    // ),
                   ],
                 ),
               ),
