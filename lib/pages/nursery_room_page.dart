@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plant_ai_app/pages/plant_detail_page.dart';
-import 'package:plant_ai_app/pages/plant_model.dart';
+import 'package:plant_ai_app/models/plant_model.dart';
 import 'package:plant_ai_app/pages/plant_illustrations_page.dart'
     hide Plant; // 导入花园页
 

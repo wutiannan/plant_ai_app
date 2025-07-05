@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'plant_model.dart';
+import '../models/plant_model.dart';
 import 'cultivation_interaction_page.dart'; // 引入培养互动页
 
 class PlantDetailPage extends StatelessWidget {

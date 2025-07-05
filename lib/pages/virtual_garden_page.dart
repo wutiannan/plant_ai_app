@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:plant_ai_app/pages/plant_illustrations_page.dart'; // 导入花园页
 import 'package:plant_ai_app/pages/nursery_room_page.dart'; // 导入培育房页
 import 'package:plant_ai_app/pages/shop_page.dart';
-import 'package:plant_ai_app/pages/plant_model.dart';
 
 class VirtualPlantIllustrationsPage extends StatelessWidget {
   const VirtualPlantIllustrationsPage({super.key});
@@ -16,11 +15,6 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
             image: AssetImage('assets/images/main_bg.png'),
             fit: BoxFit.cover,
           ),
-          // gradient: LinearGradient(
-          //   begin: Alignment.topLeft,
-          //   end: Alignment.bottomRight,
-          //   colors: [Color(0xFFD9F8E7), Color(0xFFF9F7FE)],
-          // ),
         ),
         // 页面背景图
         child: SingleChildScrollView(
@@ -28,7 +22,8 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 顶部栏：菜单  + 头像
+              SizedBox(height: MediaQuery.of(context).padding.top - 20),
+              // 顶部栏
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -57,7 +52,6 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
                 '来布置你的个性化“植域”吧！',
                 style: TextStyle(
                   fontSize: 24,
-                  fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
               ),
@@ -110,7 +104,6 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 14,
-                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
@@ -125,7 +118,6 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
-                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
@@ -149,34 +141,14 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
                         );
                       },
                       child: SizedBox(
-                        height: 184, // 与左侧两个按钮高度一致
-                        // decoration: BoxDecoration(
-                        //   // color: Colors.white,
-                        //   borderRadius: BorderRadius.circular(12),
-                        //   boxShadow: [
-                        //     BoxShadow(
-                        //       color: Colors.grey.withOpacity(0.1),
-                        //       blurRadius: 4,
-                        //       offset: const Offset(0, 2),
-                        //     ),
-                        //   ],
-                        // ),
+                        height: 200, 
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.asset(
                               'assets/images/virtual_nursery_room.png',
-                              width: 164,
-                              height: 164,
+                              width: 200,
+                              height: 200,
                             ),
-                            // const SizedBox(height: 12),
-                            // const Text(
-                            //   '培育房',
-                            //   style: TextStyle(
-                            //     fontSize: 16,
-                            //     fontWeight: FontWeight.w600,
-                            //   ),
-                            // ),
                           ],
                         ),
                       ),
@@ -203,14 +175,6 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
                               width: 165,
                               height: 84,
                             ),
-                            // const SizedBox(height: 8),
-                            // const Text(
-                            //   '植物图鉴',
-                            //   style: TextStyle(
-                            //     fontSize: 14,
-                            //     fontWeight: FontWeight.w500,
-                            //   ),
-                            // ),
                           ],
                         ),
                       ),
@@ -232,16 +196,8 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
                             Image.asset(
                               'assets/images/virtual_garden_mall.png',
                               width: 165,
-                              height: 84,
+                              height: 85,
                             ),
-                            // const SizedBox(height: 8),
-                            // const Text(
-                            //   '植域商城',
-                            //   style: TextStyle(
-                            //     fontSize: 14,
-                            //     fontWeight: FontWeight.w500,
-                            //   ),
-                            // ),
                           ],
                         ),
                       ),
@@ -293,7 +249,6 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
                               '栀子花',
                               style: TextStyle(
                                 fontSize: 16,
-                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
@@ -397,7 +352,6 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.green,
-                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
                                     const SizedBox(width: 2),
@@ -472,7 +426,6 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
                               '草莓',
                               style: TextStyle(
                                 fontSize: 16,
-                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
@@ -569,7 +522,6 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.green,
-                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
                                     const SizedBox(width: 2),

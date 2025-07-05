@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:plant_ai_app/pages/plant_model.dart';
+import 'package:plant_ai_app/models/plant_model.dart';
 
 class PlantIllustrationsPage extends StatefulWidget {
   const PlantIllustrationsPage({super.key});

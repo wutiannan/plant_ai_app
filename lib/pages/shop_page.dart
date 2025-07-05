@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:plant_ai_app/pages/plant_model.dart';
+import 'package:plant_ai_app/models/plant_model.dart';
 import 'package:plant_ai_app/models/garden_model.dart';
 import 'package:plant_ai_app/models/peripheral_model.dart';
 
