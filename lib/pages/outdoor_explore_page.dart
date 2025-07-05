@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plant_ai_app/pages/map_explore_page.dart';
 
 void main() {
   runApp(
@@ -140,31 +141,31 @@ class _OutdoorExplorePageState extends State<OutdoorExplorePage> {
       TaskPoint(
         x: 0.4,
         y: 0.1,
-        distance: '4.2km',
+        distance: 4.2,
         areaInfo: '总路程：4.2km  总时长：2.2h  收集植物：9种',
       ),
       TaskPoint(
         x: 0.6,
         y: 0.4,
-        distance: '3.1km',
+        distance: 3.1,
         areaInfo: '总路程：3.1km  总时长：1.8h  收集植物：5种',
       ),
       TaskPoint(
         x: 0.4,
         y: 0.6,
-        distance: '1.1km',
+        distance: 1.1,
         areaInfo: '总路程：1.1km  总时长：0.8h  收集植物：8种',
       ),
       TaskPoint(
         x: 0.7,
         y: 0.7,
-        distance: '2.1km',
+        distance: 2.1,
         areaInfo: '总路程：2.1km  总时长：1.7h  收集植物：6种',
       ),
       TaskPoint(
         x: 0.2,
         y: 0.5,
-        distance: '1.9km',
+        distance: 1.9,
         areaInfo: '总路程：1.9km  总时长：1.0h  收集植物：4种',
       ),
     ];
@@ -220,7 +221,7 @@ class _OutdoorExplorePageState extends State<OutdoorExplorePage> {
 class TaskPoint {
   final double x;
   final double y;
-  final String distance;
+  final double distance;
   final String areaInfo;
 
   TaskPoint({
@@ -247,12 +248,7 @@ class CurrentLocationMarker extends StatelessWidget {
             ),
             borderRadius: BorderRadius.circular(8),
           ),
-          child: const Text(
-            '当前位置',
-            style: TextStyle(
-              fontSize: 12,
-            ),
-          ),
+          child: const Text('当前位置', style: TextStyle(fontSize: 12)),
         ),
         // const SizedBox(height: 4),
         Container(
@@ -269,7 +265,7 @@ class CurrentLocationMarker extends StatelessWidget {
 }
 
 class TaskInfoCard extends StatelessWidget {
-  final String distance;
+  final double distance;
   final VoidCallback onClose;
 
   const TaskInfoCard({Key? key, required this.distance, required this.onClose})
@@ -359,7 +355,7 @@ class TaskInfoCard extends StatelessWidget {
               const Icon(Icons.location_on, color: Color(0xFF46D7E7), size: 18),
               const SizedBox(width: 4),
               Text(
-                '距离当前位置: $distance',
+                '距离当前位置: $distance km',
                 style: const TextStyle(fontSize: 14, color: Colors.grey),
               ),
             ],
@@ -368,7 +364,16 @@ class TaskInfoCard extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                // 假设这是前一个页面的跳转代码
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        MapExplorePage(totalDistance: distance),
+                  ),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF46D7E7),
                 shape: RoundedRectangleBorder(

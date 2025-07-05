@@ -100,7 +100,7 @@ class HomePage extends StatelessWidget {
                     ),
                     const SizedBox(width: 66),
                     Image.asset(
-                      'assets/images/home_plant_charactor.png',
+                      'assets/images/charactor.png',
                       width: 120,
                       height: 140,
                       fit: BoxFit.cover,
