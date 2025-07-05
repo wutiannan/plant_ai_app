@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:plant_ai_app/pages/plant_detail_page.dart';
 import 'package:plant_ai_app/models/plant_model.dart';
-import 'package:plant_ai_app/pages/plant_illustrations_page.dart'
-    hide Plant; // 导入花园页
+import 'package:plant_ai_app/pages/shop_page.dart';
 
 class NurseryRoomPage extends StatelessWidget {
   const NurseryRoomPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // 获取屏幕尺寸
-    final screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -41,106 +37,94 @@ class NurseryRoomPage extends StatelessWidget {
           ),
         ],
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            // 植物列表区域：占满剩余空间，滚动自适应
-            Container(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 12,
+      body: Stack(
+        children: [
+          // 固定背景
+          Container(height: double.infinity),
+
+          // 内容区域
+          Column(
+            children: [
+              // 按钮区域
+              Container(
+                margin: const EdgeInsets.symmetric(
+                  vertical: 16,
+                  // horizontal: 24,
                 ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _BottomButton(
+                      title: '进入花园',
+                      image: 'assets/images/left_btn_bg.png',
+                      onTap: () {},
+                    ),
+                    _BottomButton(
+                      title: '前往兑换',
+                      image: 'assets/images/right_btn_bg.png',
+                      onTap: () {
+                        // 跳转逻辑
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ShopPage()),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+
+              // 卡片区域，增加边距
+              Expanded(
                 child: Container(
-                  height: 621,
-                  decoration: BoxDecoration(
-                    image: const DecorationImage(
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
                       image: AssetImage('assets/images/plant_nursery_bg.png'),
                       fit: BoxFit.cover,
                     ),
-                    borderRadius: BorderRadius.circular(24),
                   ),
-                  child: Padding(
-                    // padding: EdgeInsets.zero,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 0,
-                      vertical: 12,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(0.0),
-                      child: GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              childAspectRatio: 0.8,
-                              crossAxisSpacing: 0,
-                              mainAxisSpacing: 0,
+                  child: GridView.builder(
+                    padding: const EdgeInsets.all(12),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          childAspectRatio: 0.8,
+                          crossAxisSpacing: 0,
+                          mainAxisSpacing: 0,
+                        ),
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    itemCount: plants.length,
+                    itemBuilder: (context, index) {
+                      final plant = plants[index];
+                      return _PlantCard(
+                        plant: plant,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  PlantDetailPage(plant: plant),
                             ),
-                        shrinkWrap: true,
-                        physics: const ClampingScrollPhysics(),
-                        itemCount: plants.length,
-                        itemBuilder: (context, index) {
-                          final plant = plants[index];
-                          return _PlantCard(
-                            plant: plant,
-                            onTap: () {
-                              // 点击卡片跳转至详情页
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      PlantDetailPage(plant: plant),
-                                ),
-                              );
-                            },
                           );
                         },
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-
-            // 底部按钮区域：固定高度，独立于滚动
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              // color: Colors.white, // 与页面背景一致
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _BottomButton(
-                    title: '进入花园',
-                    image: 'assets/images/plant_btn.png',
-                    onTap: () {
-                      // // 点击进入花园
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PlantIllustrationsPage(),
-                        ),
                       );
                     },
                   ),
-                  const SizedBox(width: 24),
-                  _BottomButton(
-                    title: '前往兑换',
-                    image: 'assets/images/plant_btn.png',
-                    onTap: () {
-                      // 跳转逻辑
-                    },
-                  ),
-                ],
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
+        ],
       ),
     );
   }
 }
 
-// 植物卡片组件
 class _PlantCard extends StatelessWidget {
   final Plant plant;
   final VoidCallback onTap;
@@ -153,44 +137,26 @@ class _PlantCard extends StatelessWidget {
       onTap: onTap,
       child: Column(
         children: [
+          Text(plant.name, style: const TextStyle(fontSize: 14)),
+          const SizedBox(height: 4),
           SizedBox(
-            width: double.infinity,
-            // padding: const EdgeInsets.all(10),
-            // decoration: BoxDecoration(
-            //   color: Colors.white.withOpacity(0.9),
-            //   borderRadius: BorderRadius.circular(12),
-            // ),
-            child: Column(
-              children: [
-                Text(plant.name, style: const TextStyle(fontSize: 14)),
-                const SizedBox(height: 4),
-                SizedBox(
-                  width: 50,
-                  height: 3,
-                  child: LinearProgressIndicator(
-                    value: plant.progress,
-                    backgroundColor: Colors.grey[300],
-                    valueColor: const AlwaysStoppedAnimation<Color>(
-                      Colors.green,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                SizedBox(
-                  width: 56,
-                  height: 80,
-                  child: ClipRRect(
-                    child: Image.asset(plant.image, fit: BoxFit.cover),
-                  ),
-                ),
-                Container(
-                  width: double.infinity,
-                  height: 6,
-                  color: Colors.white,
-                ),
-              ],
+            width: 50,
+            height: 3,
+            child: LinearProgressIndicator(
+              value: plant.progress,
+              backgroundColor: Colors.grey[300],
+              valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
             ),
           ),
+          const SizedBox(height: 8),
+          SizedBox(
+            width: 56,
+            height: 80,
+            child: ClipRRect(
+              child: Image.asset(plant.image, fit: BoxFit.cover),
+            ),
+          ),
+          Container(width: double.infinity, height: 6, color: Colors.white),
         ],
       ),
     );
@@ -214,20 +180,16 @@ class _BottomButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: 140,
-        height: 48,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        height: 45,
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
         decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover),
-          borderRadius: BorderRadius.circular(24),
+           image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover),
+          // borderRadius: BorderRadius.circular(24),
         ),
         child: Text(
           title,
-          style: const TextStyle(
-            fontSize: 14,
-            color: Color.fromARGB(255, 0, 0, 0),
-            // fontWeight: FontWeight.bold,
-          ),
-          textAlign: TextAlign.center, // 水平居中
+          style: const TextStyle(fontSize: 16, color: Colors.white),
+          textAlign: TextAlign.center,
         ),
       ),
     );
