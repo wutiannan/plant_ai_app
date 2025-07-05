@@ -10,17 +10,40 @@ class PlantDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          icon: Image.asset(
+            'assets/images/main_icon_back.png',
+            width: 22,
+            height: 22,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
+        centerTitle: true,
+        title: const Text(
+          '培养说明',
+          style: TextStyle(fontSize: 20, color: Colors.black),
+        ),
+        actions: [
+          IconButton(
+            icon: Image.asset(
+              'assets/images/main_icon_menu.png',
+              width: 22,
+              height: 22,
+            ),
+            onPressed: () {},
+          ),
+        ],
+      ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/base_bg.png'),
             fit: BoxFit.cover,
           ),
-          // gradient: LinearGradient(
-          //   begin: Alignment.topLeft,
-          //   end: Alignment.bottomRight,
-          //   colors: [Color(0xFFD9F8E7), Color(0xFFF9F7FE)],
-          // ),
         ),
         child: SafeArea(
           child: Padding(
@@ -28,53 +51,7 @@ class PlantDetailPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // 顶部导航栏
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      icon: Image.asset(
-                        'assets/images/main_icon_back.png',
-                        width: 24,
-                        height: 24,
-                      ),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                    Text(
-                      '培养说明',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                    IconButton(
-                      icon: Image.asset(
-                        'assets/images/main_icon_menu.png',
-                        width: 24,
-                        height: 24,
-                      ),
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 24),
-
-                // 植物名称和英文名称
-                Text(
-                  plant.name,
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-                Text(
-                  plant.enName,
-                  style: TextStyle(fontSize: 14, color: Colors.grey[600]),
-                ),
-                const SizedBox(height: 12),
-
+                SizedBox(height: MediaQuery.of(context).padding.top + 30),
                 // 绿色竖条和文字左右结构
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,13 +66,30 @@ class PlantDetailPage extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: Text(
-                        plant.description,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.black,
-                          height: 1.6,
-                        ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // 植物名称和英文名称
+                          Text(
+                            plant.name,
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            plant.enName,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          Text(
+                            plant.description,
+                            style: TextStyle(fontSize: 14, height: 1.6),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -117,13 +111,12 @@ class PlantDetailPage extends StatelessWidget {
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Container(
-                    margin: const EdgeInsets.only(bottom: 32),
-                    width: 120,
-                    height: 120, // 增大高度使按钮成为圆形
+                    margin: const EdgeInsets.only(bottom: 150),
+                    width: 60,
+                    height: 60, // 增大高度使按钮成为圆形
                     child: ElevatedButton(
                       onPressed: () {
                         // 按钮点击事件
-                        // 跳转到培养互动页并传递植物信息
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -134,9 +127,9 @@ class PlantDetailPage extends StatelessWidget {
                       },
                       style: ElevatedButton.styleFrom(
                         shape: const CircleBorder(), // 圆形按钮
-                        backgroundColor: Colors.white.withOpacity(0.5), // 按钮背景色
+                        backgroundColor: Colors.white.withOpacity(0.8), // 按钮背景色
                         padding: EdgeInsets.zero, // 去除内边距
-                        elevation: 10, // 按钮阴影深度
+                        elevation: 6, // 按钮阴影深度
                         shadowColor: Colors.green.withOpacity(0.5), // 绿色阴影
                       ),
                       child: Container(
@@ -151,9 +144,8 @@ class PlantDetailPage extends StatelessWidget {
                           child: Text(
                             '开始培养',
                             style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                              fontSize: 12,
+                              color: Colors.black
                             ),
                           ),
                         ),

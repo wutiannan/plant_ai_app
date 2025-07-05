@@ -25,6 +25,34 @@ class _CultivationInteractionPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          icon: Image.asset(
+            'assets/images/main_icon_back.png',
+            width: 22,
+            height: 22,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
+        centerTitle: true,
+        title: const Text(
+          '培养互动',
+          style: TextStyle(fontSize: 20, color: Colors.black),
+        ),
+        actions: [
+          IconButton(
+            icon: Image.asset(
+              'assets/images/main_icon_menu.png',
+              width: 22,
+              height: 22,
+            ),
+            onPressed: () {},
+          ),
+        ],
+      ),
       // 整体背景图
       body: Container(
         decoration: BoxDecoration(
@@ -39,37 +67,6 @@ class _CultivationInteractionPageState
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // 顶部导航栏
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // 返回按钮
-                    GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      child: Image.asset(
-                        'assets/images/main_icon_back.png',
-                        width: 24,
-                        height: 24,
-                      ),
-                    ),
-                    // 标题
-                    Text(
-                      '培养互动',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                    // 更多按钮
-                    Image.asset(
-                      'assets/images/main_icon_menu.png',
-                      width: 24,
-                      height: 24,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 32),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -141,7 +138,7 @@ class _CultivationInteractionPageState
                     LinearProgressIndicator(
                       value: widget.plant.progress,
                       backgroundColor: Colors.grey[300],
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+                      valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF6EC82A)),
                     ),
                     const SizedBox(height: 4),
                     Text(
@@ -155,7 +152,7 @@ class _CultivationInteractionPageState
                 // 植物名称切换栏
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.8),
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -185,13 +182,13 @@ class _CultivationInteractionPageState
                     ],
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 8),
 
                 // 加速培育条件提示
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF46D7E7),
+                    color: const Color(0xFF6EC82A),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
@@ -205,13 +202,13 @@ class _CultivationInteractionPageState
                       Expanded(
                         child: Text(
                           '目前您的这株植物所需阳光还差5份噢！',
-                          style: TextStyle(fontSize: 14, color: Colors.black),
+                          style: TextStyle(fontSize: 14, color: Colors.white),
                         ),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 10),
 
                 // 控制卡片区域（带背景图）
                 GridView.count(
@@ -229,13 +226,11 @@ class _CultivationInteractionPageState
                       progress: _humidityProgress * 100,
                       min: 0,
                       max: 100,
-                      backgroundImage: 'assets/images/cultivation_card_bg.png',
                     ),
                     _buildControlCard(
                       iconPath: 'assets/images/pest_icon.png',
                       title: '虫害检查',
                       value: '健康无害虫',
-                      backgroundImage: 'assets/images/cultivation_card_bg.png',
                       isPestCheck: true,
                     ),
                     _buildControlCard(
@@ -245,7 +240,6 @@ class _CultivationInteractionPageState
                       progress: _getTemperatureValue(), // 使用实际温度值
                       min: 10.0,
                       max: 40.0,
-                      backgroundImage: 'assets/images/cultivation_card_bg.png',
                       onChanged: (value) {
                         setState(() {
                           // 将实际温度值转换回相对进度
@@ -260,7 +254,6 @@ class _CultivationInteractionPageState
                       progress: _getLightValue(), // 使用实际光照值
                       min: 10000.0,
                       max: 20000.0,
-                      backgroundImage: 'assets/images/cultivation_card_bg.png',
                       onChanged: (value) {
                         setState(() {
                           // 将实际光照值转换回相对进度
@@ -302,17 +295,17 @@ class _CultivationInteractionPageState
     double? progress,
     double? min,
     double? max,
-    required String backgroundImage,
     bool isPestCheck = false,
     Function(double)? onChanged,
   }) {
     return Container(
       decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(backgroundImage),
-          fit: BoxFit.cover,
-        ),
         borderRadius: BorderRadius.circular(12),
+        gradient: const LinearGradient(
+          begin: Alignment.bottomLeft,
+          end: Alignment.topRight,
+          colors: [Color(0xFFFFF7BB), Color(0xFFC8FFFE)],
+        ),
       ),
       padding: const EdgeInsets.all(12),
       child: Column(
@@ -323,7 +316,7 @@ class _CultivationInteractionPageState
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: Colors.green,
+              color: const Color(0xFF6EC82A),
               shape: BoxShape.circle,
             ),
             child: Center(
@@ -335,19 +328,26 @@ class _CultivationInteractionPageState
               ),
             ),
           ),
-          const SizedBox(height: 8),
-          // 标题
-          Text(title, style: TextStyle(fontSize: 14, color: Colors.black)),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // 标题
+              Text(title, style: TextStyle(fontSize: 14, color: Colors.black)),
+              // 值
+              Text(
+                value,
+                style: TextStyle(fontSize: 12, color: Colors.grey[800]),
+              ),
+            ],
+          ),
 
-          // 值
-          Text(value, style: TextStyle(fontSize: 12, color: Colors.grey[800])),
           const SizedBox(height: 4),
           // 进度条（仅非虫害检查卡片显示）
           if (!isPestCheck &&
               progress != null &&
               min != null &&
               max != null) ...[
-            const SizedBox(height: 8),
             Slider(
               value: progress,
               min: min,
@@ -355,28 +355,6 @@ class _CultivationInteractionPageState
               onChanged: onChanged,
               activeColor: Colors.white,
               inactiveColor: Colors.grey[300],
-            ),
-            // 最小最大值显示
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  title == '湿度控制'
-                      ? '0%'
-                      : title == '温度控制'
-                      ? '10°C'
-                      : '10000LUX',
-                  style: TextStyle(fontSize: 10, color: Colors.grey[600]),
-                ),
-                Text(
-                  title == '湿度控制'
-                      ? '100%'
-                      : title == '温度控制'
-                      ? '40°C'
-                      : '20000LUX',
-                  style: TextStyle(fontSize: 10, color: Colors.grey[600]),
-                ),
-              ],
             ),
           ],
         ],
