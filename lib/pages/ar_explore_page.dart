@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:plant_ai_app/pages/ar_task_select_page.dart';
-// import 'package:plant_ai_app/pages/outdoor_explore_page.dart';
+import 'package:plant_ai_app/pages/outdoor_explore_page.dart';
 
 class ARExplorePage extends StatelessWidget {
-  const ARExplorePage({super.key});
+  const ARExplorePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +19,7 @@ class ARExplorePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: MediaQuery.of(context).padding.top - 20),
               // 顶部栏
               Row(
                 children: [
@@ -243,10 +243,10 @@ class ARExplorePage extends StatelessWidget {
       onTap: () {
         if (title == '附近推荐任务') {
           // 导航到户外探索页面
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => const OutdoorExplorePage()),
-          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => OutdoorExplorePage()),
+          );
         } else {
           print('点击了$title');
           // 其他卡片的逻辑可以在这里添加
