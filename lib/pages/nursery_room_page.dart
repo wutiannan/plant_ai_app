@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:plant_ai_app/pages/plant_detail_page.dart';
 import 'package:plant_ai_app/models/plant_model.dart';
 import 'package:plant_ai_app/pages/shop_page.dart';
+import 'package:plant_ai_app/pages/garden_page.dart';
 
 class NurseryRoomPage extends StatelessWidget {
   const NurseryRoomPage({super.key});
@@ -57,7 +58,13 @@ class NurseryRoomPage extends StatelessWidget {
                     _BottomButton(
                       title: '进入花园',
                       image: 'assets/images/left_btn_bg.png',
-                      onTap: () {},
+                      onTap: () {
+                        // 点击进入花园
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => GardenPage()),
+                        );
+                      },
                     ),
                     _BottomButton(
                       title: '前往兑换',
@@ -183,7 +190,7 @@ class _BottomButton extends StatelessWidget {
         height: 45,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
         decoration: BoxDecoration(
-           image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover),
+          image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover),
           // borderRadius: BorderRadius.circular(24),
         ),
         child: Text(

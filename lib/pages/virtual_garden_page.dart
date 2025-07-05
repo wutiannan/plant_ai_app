@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:plant_ai_app/pages/plant_illustrations_page.dart'; // 导入花园页
-import 'package:plant_ai_app/pages/nursery_room_page.dart'; // 导入培育房页
+import 'package:plant_ai_app/pages/plant_illustrations_page.dart';
+import 'package:plant_ai_app/pages/nursery_room_page.dart';
 import 'package:plant_ai_app/pages/shop_page.dart';
+import 'package:plant_ai_app/pages/garden_page.dart';
 
 class VirtualPlantIllustrationsPage extends StatelessWidget {
   const VirtualPlantIllustrationsPage({super.key});
@@ -50,10 +51,7 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
               // 标题区域
               const Text(
                 '来布置你的个性化“植域”吧！',
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Colors.black,
-                ),
+                style: TextStyle(fontSize: 24, color: Colors.black),
               ),
               const Text(
                 "LET'S SET UP YOUR EXCLUSIVE 'PLANTING AREA'!",
@@ -84,10 +82,7 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
                         // 点击进入花园
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                const PlantIllustrationsPage(),
-                          ),
+                          MaterialPageRoute(builder: (context) => GardenPage()),
                         );
                       },
                       child: Container(
@@ -101,10 +96,7 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
                         ),
                         child: const Text(
                           '进入花园',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                          ),
+                          style: TextStyle(color: Colors.white, fontSize: 14),
                         ),
                       ),
                     ),
@@ -115,10 +107,7 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
                     left: 12,
                     child: const Text(
                       '雪橇狗的花园',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
+                      style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),
                 ],
@@ -141,7 +130,7 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
                         );
                       },
                       child: SizedBox(
-                        height: 200, 
+                        height: 200,
                         child: Column(
                           children: [
                             Image.asset(
@@ -245,12 +234,7 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
                           // 植物名称
                           const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 12),
-                            child: Text(
-                              '栀子花',
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
-                            ),
+                            child: Text('栀子花', style: TextStyle(fontSize: 16)),
                           ),
                           // 植物描述
                           const Padding(
@@ -422,12 +406,7 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
                           // 植物名称
                           const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 12),
-                            child: Text(
-                              '草莓',
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
-                            ),
+                            child: Text('草莓', style: TextStyle(fontSize: 16)),
                           ),
                           // 植物描述
                           const Padding(
