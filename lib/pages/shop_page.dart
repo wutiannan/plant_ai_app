@@ -29,23 +29,6 @@ class _ShopPageState extends State<ShopPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   leading: IconButton(
-      //     icon: const Icon(Icons.arrow_back),
-      //     onPressed: () {
-      //       Navigator.pop(context);
-      //     },
-      //   ),
-      //   title: const Text('植域商店'),
-      //   bottom:      // TabBar(
-      //   controller: _tabController,
-      //   tabs: const [
-      //     Tab(text: '植物'),
-      //     Tab(text: '花园'),
-      //     Tab(text: '周边'),
-      //   ],
-      // ),
-      // ),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
@@ -59,7 +42,7 @@ class _ShopPageState extends State<ShopPage>
         ),
         centerTitle: true,
         title: const Text(
-          '培育房',
+          '植域商城',
           style: TextStyle(fontSize: 20, color: Colors.black),
         ),
         actions: [
@@ -79,7 +62,6 @@ class _ShopPageState extends State<ShopPage>
           labelStyle: const TextStyle(fontWeight: FontWeight.bold),
           indicator: const UnderlineTabIndicator(
             borderSide: BorderSide(width: 3, color: Colors.green),
-            // insets: EdgeInsets.symmetric(horizontal: 16), // 左右间距
           ),
           tabs: const [
             Tab(text: '植物'),
@@ -122,18 +104,10 @@ class _ShopPageState extends State<ShopPage>
               Center(
                 child: Image.asset(plant.image, height: 100, fit: BoxFit.cover),
               ),
-              // Image.asset(plant.image, height: 120, fit: BoxFit.cover),
-              // const SizedBox(height: 8),
               // 植物名称
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  plant.name,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Text(plant.name, style: const TextStyle(fontSize: 16)),
               ),
               // 植物描述
               Padding(
@@ -157,18 +131,8 @@ class _ShopPageState extends State<ShopPage>
                   children: [
                     Row(
                       children: [
-                        Text(
-                          '150',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.green,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        const Text(
-                          '域币',
-                          style: TextStyle(fontSize: 12, color: Colors.green),
-                        ),
+                        Text('150', style: TextStyle(fontSize: 16)),
+                        const Text('域币', style: TextStyle(fontSize: 12)),
                       ],
                     ),
                     Row(
@@ -250,65 +214,121 @@ class _ShopPageState extends State<ShopPage>
       itemCount: gardenData.length,
       itemBuilder: (context, index) {
         final garden = gardenData[index];
-        return Card(
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            // gradient: const LinearGradient(
+            //   begin: Alignment.bottomLeft,
+            //   end: Alignment.topRight,
+            //   colors: [Color(0xFFFFF7BB), Color(0xFFC8FFFE)],
+            // ),
+            image: DecorationImage(
+              image: AssetImage(garden.image),
+              fit: BoxFit.cover,
+              // opacity: 0.1, // 调整底图透明度
+            ),
+          ),
           child: Column(
             children: [
-              Image.asset(garden.image, height: 120, fit: BoxFit.cover),
+              // 植物图片
+              // Center(
+              //   child: Image.asset(
+              //     garden.image,
+              //     height: 100,
+              //     fit: BoxFit.cover,
+              //   ),
+              // ),
+              const SizedBox(height: 100),
+              // 植物名称
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: Text(
                   garden.name,
+                  style: const TextStyle(fontSize: 16, color: Colors.white),
+                ),
+              ),
+              // 植物描述
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Text(
+                  garden.description,
                   style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                    color: Colors.white,
+                    height: 1.4,
                   ),
                 ),
               ),
-              Text(
-                '价格：${garden.price} 硬币',
-                style: const TextStyle(fontSize: 14),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  IconButton(
-                    icon: Icon(
-                      garden.isCollected
-                          ? Icons.favorite
-                          : Icons.favorite_border,
-                      color: garden.isCollected ? Colors.red : null,
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          garden.price as String,
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        ),
+                        const Text(
+                          '域币',
+                          style: TextStyle(fontSize: 12, color: Colors.white),
+                        ),
+                      ],
                     ),
-                    onPressed: () {
-                      setState(() {
-                        gardenData[index] = GardenModel(
-                          name: garden.name,
-                          image: garden.image,
-                          description: garden.description,
-                          price: garden.price,
-                          isCollected: !garden.isCollected,
-                          isInCart: garden.isInCart,
-                        );
-                      });
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      garden.isInCart ? Icons.bookmark : Icons.bookmark_border,
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            // 购物车逻辑
+                            setState(() {
+                              gardenData[index] = GardenModel(
+                                name: garden.name,
+                                image: garden.image,
+                                description: garden.description,
+                                price: garden.price,
+                                isWishlist: garden.isWishlist,
+                                isInCart: !garden.isInCart,
+                              );
+                            });
+                          },
+                          icon: Icon(
+                            Icons.shopping_cart,
+                            size: 18,
+                            color: garden.isInCart
+                                ? Colors.white
+                                : const Color(0xFF46D7E7),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            // 收藏逻辑
+                            setState(() {
+                              gardenData[index] = GardenModel(
+                                name: garden.name,
+                                image: garden.image,
+                                description: garden.description,
+                                price: garden.price,
+                                isWishlist: !garden.isWishlist,
+                                isInCart: garden.isInCart,
+                              );
+                            });
+                          },
+                          icon: Icon(
+                            Icons.favorite,
+                            size: 18,
+                            color: garden.isCollected
+                                ? Colors.white
+                                : const Color(0xFF46D7E7),
+                          ),
+                        ),
+                      ],
                     ),
-                    onPressed: () {
-                      setState(() {
-                        gardenData[index] = GardenModel(
-                          name: garden.name,
-                          image: garden.image,
-                          description: garden.description,
-                          price: garden.price,
-                          isCollected: garden.isCollected,
-                          isInCart: !garden.isInCart,
-                        );
-                      });
-                    },
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
@@ -328,67 +348,68 @@ class _ShopPageState extends State<ShopPage>
       itemCount: peripheralData.length,
       itemBuilder: (context, index) {
         final peripheral = peripheralData[index];
-        return Card(
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            image: DecorationImage(
+              image: AssetImage(peripheral.image),
+              fit: BoxFit.cover,
+            ),
+          ),
           child: Column(
             children: [
-              Image.asset(peripheral.image, height: 120, fit: BoxFit.cover),
+              const SizedBox(height: 100),
+              // 周边名称
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: Text(
                   peripheral.name,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: const TextStyle(fontSize: 16),
                 ),
               ),
-              Text(
-                '价格：${peripheral.price} 域币',
-                style: const TextStyle(fontSize: 14),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  IconButton(
-                    icon: Icon(
-                      peripheral.isCollected
-                          ? Icons.favorite
-                          : Icons.favorite_border,
-                      color: peripheral.isCollected ? Colors.red : null,
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          peripheral.price as String,
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        const Text('域币', style: TextStyle(fontSize: 12)),
+                      ],
                     ),
-                    onPressed: () {
-                      setState(() {
-                        peripheralData[index] = PeripheralModel(
-                          name: peripheral.name,
-                          image: peripheral.image,
-                          description: peripheral.description,
-                          price: peripheral.price,
-                          isCollected: !peripheral.isCollected,
-                          isInCart: peripheral.isInCart,
-                        );
-                      });
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      peripheral.isInCart
-                          ? Icons.bookmark
-                          : Icons.bookmark_border,
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            // 购物车逻辑
+                            setState(() {
+                              peripheralData[index] = PeripheralModel(
+                                name: peripheral.name,
+                                image: peripheral.image,
+                                price: peripheral.price,
+                                isWishlist: !peripheral.isWishlist,
+                              );
+                            });
+                          },
+                          icon: Icon(
+                            Icons.favorite,
+                            size: 18,
+                            color: peripheral.isWishlist
+                                ? Colors.white
+                                : const Color(0xFF46D7E7),
+                          ),
+                        ),
+                      ],
                     ),
-                    onPressed: () {
-                      setState(() {
-                        peripheralData[index] = PeripheralModel(
-                          name: peripheral.name,
-                          image: peripheral.image,
-                          description: peripheral.description,
-                          price: peripheral.price,
-                          isCollected: peripheral.isCollected,
-                          isInCart: !peripheral.isInCart,
-                        );
-                      });
-                    },
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
