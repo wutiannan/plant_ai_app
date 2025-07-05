@@ -33,7 +33,7 @@ List<Plant> plants = [
     image: 'assets/images/plant_succulent.png',
     progress: 0.8,
     description:
-        '多肉植物也叫多浆植物，是指植物的根、茎、叶三种营养器官中叶是肥厚多汁并且具备储藏大量水分功能的植物。\n\n它们喜欢充足但适度的阳光照射，需要疏松透气、排水良好的土壤，浇水要遵循“干透浇透”的原则。',
+        '多肉植物也叫多浆植物，是指植物的根、茎、叶三种营养器官中叶是肥厚多汁并且具备储藏大量水分功能的植物。',
     category: '多肉', // 可根据实际归类调整，若截图分类无对应，可保留或自定义
     isCollected: true,
     isWishlist: false,
@@ -46,7 +46,7 @@ List<Plant> plants = [
     image: 'assets/images/plant_chrysanthemum.png',
     progress: 0.6,
     description:
-        '菊花是中国十大传统名花、花中四君子之一，具有清寒傲雪的品格。\n\n它喜凉爽、较耐寒，生长适温18 - 21℃，每天14.5小时日照有利于茎叶生长，每天12小时以上黑暗与10℃的夜温适于花芽发育。',
+        '菊花是中国十大传统名花、花中四君子之一，具有清寒傲雪的品格。',
     category: '鲜花',
     isCollected: true,
     isWishlist: false,
@@ -59,7 +59,7 @@ List<Plant> plants = [
     image: 'assets/images/plant_venus_flytrap.png',
     progress: 0.7,
     description:
-        '捕蝇草是一种非常有趣的食虫植物，它的茎很短，在叶的顶端长有一个酷似“贝壳”的捕虫夹，且能分泌蜜汁。\n\n它喜温暖、湿润和阳光充足的环境，适宜用泥炭土、水苔、珍珠岩等混合配制的基质栽培。',
+        '捕蝇草是一种非常有趣的食虫植物，它的茎很短，在叶的顶端长有一个酷似“贝壳”的捕虫夹，且能分泌蜜汁。',
     category: '食虫植物', 
     isCollected: true,
     isWishlist: false,
@@ -72,7 +72,7 @@ List<Plant> plants = [
     image: 'assets/images/plant_rhododendron.png',
     progress: 0.5,
     description:
-        '杜鹃花像会魔法的小喇叭！ 它的花瓣软软的、颜色超丰富，像彩虹落在枝头～（注意！部分野生杜鹃花叶子有毒，欣赏时只摸花瓣就好啦～）',
+        '杜鹃花像会魔法的小喇叭！ 它的花瓣软软的、颜色超丰富，像彩虹落在枝头～',
     category: '鲜花',
     isCollected: true,
     isWishlist: false,
