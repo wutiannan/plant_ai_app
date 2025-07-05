@@ -32,17 +32,17 @@ dependencies:
     sdk: flutter
   camera: ^0.10.5
   http: ^1.1.0 
-  ar_flutter_plugin: ^0.7.3    
+  # ar_flutter_plugin: ^0.7.3    
   # geolocator: ^9.0.2 
-  google_maps_flutter: ^2.4.0  # 
-  location: ^8.0.1 # 用于获取设备位置
+  # google_maps_flutter: ^2.4.0  # 
+  # location: ^8.0.1 # 用于获取设备位置
   # amap_flutter_map: ^2.0.0  # 高德地图核心插件
   # amap_flutter_base: ^2.0.0  # 高德地图基础组件
   # amap_flutter_search: ^2.0.0  # 搜索功能组件
-  flutter_baidu_mapapi_map: ^3.9.2
-  flutter_baidu_mapapi_search: ^3.9.2
-  flutter_bmflocation: ^3.8.0
-  flutter_baidu_mapapi_utils: ^3.9.2
+  # flutter_baidu_mapapi_map: ^3.9.2
+  # flutter_baidu_mapapi_search: ^3.9.2
+  # flutter_bmflocation: ^3.8.0
+  # flutter_baidu_mapapi_utils: ^3.9.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

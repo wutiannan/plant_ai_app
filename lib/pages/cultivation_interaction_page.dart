@@ -4,8 +4,7 @@ import 'plant_model.dart';
 class CultivationInteractionPage extends StatefulWidget {
   final Plant plant;
 
-  const CultivationInteractionPage({Key? key, required this.plant})
-    : super(key: key);
+  const CultivationInteractionPage({super.key, required this.plant});
 
   @override
   State<CultivationInteractionPage> createState() =>
@@ -15,7 +14,7 @@ class CultivationInteractionPage extends StatefulWidget {
 class _CultivationInteractionPageState
     extends State<CultivationInteractionPage> {
   // 进度条数据（模拟）
-  double _humidityProgress = 0.6; // 对应 60%RH
+  final double _humidityProgress = 0.6; // 对应 60%RH
   double _temperatureProgress = 0.333; // 相对进度 (20-10)/(40-10) ≈ 0.333
   double _lightProgress = 0.6; // 相对进度 (16000-10000)/(20000-10000) = 0.6
 
@@ -281,7 +280,7 @@ class _CultivationInteractionPageState
 
   // 构建操作按钮（绿色圆底、白色图案）
   Widget _buildActionButton({required String iconPath}) {
-    return Container(
+    return SizedBox(
       width: 40,
       height: 40,
       // decoration: BoxDecoration(color: Colors.green, shape: BoxShape.circle),

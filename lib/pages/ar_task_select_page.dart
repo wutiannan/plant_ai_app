@@ -2,8 +2,7 @@
 import 'package:flutter/material.dart';
 
 class ARTaskSelectPage extends StatelessWidget {
-  const ARTaskSelectPage({Key? key, required String taskType})
-    : super(key: key);
+  const ARTaskSelectPage({super.key, required String taskType});
 
   @override
   Widget build(BuildContext context) {
@@ -64,8 +63,7 @@ class _TaskCard extends StatelessWidget {
   final IconData icon;
   final String title;
 
-  const _TaskCard({Key? key, required this.icon, required this.title})
-    : super(key: key);
+  const _TaskCard({super.key, required this.icon, required this.title});
 
   @override
   Widget build(BuildContext context) {

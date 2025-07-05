@@ -5,7 +5,7 @@ import 'cultivation_interaction_page.dart'; // 引入培养互动页
 class PlantDetailPage extends StatelessWidget {
   final Plant plant;
 
-  const PlantDetailPage({Key? key, required this.plant}) : super(key: key);
+  const PlantDetailPage({super.key, required this.plant});
 
   @override
   Widget build(BuildContext context) {

@@ -5,7 +5,7 @@ import 'package:plant_ai_app/pages/shop_page.dart';
 import 'package:plant_ai_app/pages/plant_model.dart';
 
 class VirtualPlantIllustrationsPage extends StatelessWidget {
-  const VirtualPlantIllustrationsPage({Key? key}) : super(key: key);
+  const VirtualPlantIllustrationsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +148,7 @@ class VirtualPlantIllustrationsPage extends StatelessWidget {
                           ),
                         );
                       },
-                      child: Container(
+                      child: SizedBox(
                         height: 184, // 与左侧两个按钮高度一致
                         // decoration: BoxDecoration(
                         //   // color: Colors.white,

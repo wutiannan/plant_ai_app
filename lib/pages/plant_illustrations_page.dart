@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:plant_ai_app/pages/plant_model.dart';
 
 class PlantIllustrationsPage extends StatefulWidget {
-  const PlantIllustrationsPage({Key? key}) : super(key: key);
+  const PlantIllustrationsPage({super.key});
 
   @override
   State<PlantIllustrationsPage> createState() => _PlantIllustrationsPageState();
@@ -182,7 +182,7 @@ class _PlantIllustrationsPageState extends State<PlantIllustrationsPage>
           Expanded(
             child: Container(
               decoration: const BoxDecoration(
-                borderRadius: const BorderRadius.only(
+                borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(40),
                   topRight: Radius.circular(40),
                 ),
@@ -242,7 +242,7 @@ class _PlantIllustrationsPageState extends State<PlantIllustrationsPage>
                     child: Container(
                       decoration: const BoxDecoration(
                         color: Colors.white,
-                        borderRadius: const BorderRadius.only(
+                        borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(40),
                           topRight: Radius.circular(40),
                         ),

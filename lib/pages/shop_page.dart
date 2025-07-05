@@ -4,7 +4,7 @@ import 'package:plant_ai_app/models/garden_model.dart';
 import 'package:plant_ai_app/models/peripheral_model.dart';
 
 class ShopPage extends StatefulWidget {
-  const ShopPage({Key? key}) : super(key: key);
+  const ShopPage({super.key});
 
   @override
   State<ShopPage> createState() => _ShopPageState();
@@ -270,7 +270,7 @@ class _ShopPageState extends State<ShopPage>
                     Row(
                       children: [
                         Text(
-                          garden.price as String,
+                          garden.price,
                           style: TextStyle(fontSize: 16, color: Colors.white),
                         ),
                         const Text(
@@ -378,7 +378,7 @@ class _ShopPageState extends State<ShopPage>
                     Row(
                       children: [
                         Text(
-                          peripheral.price as String,
+                          peripheral.price,
                           style: TextStyle(fontSize: 16),
                         ),
                         const Text('域币', style: TextStyle(fontSize: 12)),

@@ -9,7 +9,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
 
 // 自定义底部导航栏
 class TabNavigator extends StatefulWidget {
-  const TabNavigator({Key? key}) : super(key: key);
+  const TabNavigator({super.key});
 
   @override
   State<TabNavigator> createState() => _TabNavigatorState();

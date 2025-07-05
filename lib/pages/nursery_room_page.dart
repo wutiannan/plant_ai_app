@@ -5,7 +5,7 @@ import 'package:plant_ai_app/pages/plant_illustrations_page.dart'
     hide Plant; // 导入花园页
 
 class NurseryRoomPage extends StatelessWidget {
-  const NurseryRoomPage({Key? key}) : super(key: key);
+  const NurseryRoomPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -153,7 +153,7 @@ class _PlantCard extends StatelessWidget {
       onTap: onTap,
       child: Column(
         children: [
-          Container(
+          SizedBox(
             width: double.infinity,
             // padding: const EdgeInsets.all(10),
             // decoration: BoxDecoration(
@@ -164,7 +164,7 @@ class _PlantCard extends StatelessWidget {
               children: [
                 Text(plant.name, style: const TextStyle(fontSize: 14)),
                 const SizedBox(height: 4),
-                Container(
+                SizedBox(
                   width: 50,
                   height: 3,
                   child: LinearProgressIndicator(
@@ -176,7 +176,7 @@ class _PlantCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                Container(
+                SizedBox(
                   width: 56,
                   height: 80,
                   child: ClipRRect(
